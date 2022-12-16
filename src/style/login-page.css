@@ -1,0 +1,23 @@
+.login {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  height: 100%;
+}
+
+.login__title {
+
+}
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login__form-label {
+  width: 100%;
+}
+
+.login__form-input {
+
+}
