@@ -42,6 +42,7 @@ export default function ErrorPage() {
               <label htmlFor="login" className="login__form-label">
                 <Field
                   id="login"
+                  autocomplete="username"
                   name="login"
                   className="login__form-input"
                   placeholder="Login"
@@ -53,6 +54,7 @@ export default function ErrorPage() {
               <label htmlFor="password" className="login__form-label">
                 <Field
                   id="password"
+                  autocomplete="current-password"
                   name="password"
                   className="login__form-input"
                   placeholder="Password"
