@@ -28,7 +28,7 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Nav className="header">
+    <Nav className="header border-bottom">
       <Nav.Item>
         <Nav.Link href="/">
           Hexlet chat

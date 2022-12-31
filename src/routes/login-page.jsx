@@ -5,27 +5,48 @@ import { Button, FormGroup, FormLabel } from 'react-bootstrap';
 import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
-import { useRouteError, useLocation } from 'react-router-dom';
+import {
+  useRouteError, useLocation, useNavigate,
+} from 'react-router-dom';
+import { useImmer } from 'use-immer';
 import * as Yup from 'yup';
 import axios from 'axios';
 
 const LoginPage = () => {
   const error = useRouteError();
-  console.error(error);
+  console.error(error, 'router error?');
 
-  const location = useLocation;
+  const navigate = useNavigate();
+  const location = useLocation();
   const loginInput = useRef(null);
+  const [authError, updateAuthError] = useImmer({
+    hasError: false,
+    errorMessage: '',
+  });
 
   useEffect(() => {
     loginInput.current.focus();
   }, [location]);
 
-  const handleSubmit = ({ login, password }, { resetForm }) => {
-    axios.post('login', {
-      username: login,
-      password,
+  const handleSubmit = async ({ login, password }) => {
+    try {
+      const { token } = await axios.post('login', {
+        username: login,
+        password,
+      });
+      localStorage.setItem('token', token);
+      navigate('/');
+    } catch ({ response }) {
+      updateAuthError({
+        hasError: true,
+        errorMessage: response.status === 401 ? 'Password or login is incorrect' : 'Server error',
+      });
+    }
+  };
+  const resetAuthError = () => {
+    updateAuthError((authError) => {
+      authError.hasError = false;
     });
-    resetForm();
   };
 
   return (
@@ -42,16 +63,16 @@ const LoginPage = () => {
             login: Yup.string()
               .max(15, 'Must be 15 characters or less')
               .min(3, 'Must be at least 3 characters')
-              .required('Required'),
+              .required('Login is required'),
             password: Yup.string()
               .max(15, 'Must be 15 characters or less')
               .min(5, 'Must be at least 5 characters')
-              .required('Required'),
+              .required('Password is required'),
           })}
           onSubmit={handleSubmit}
         >
           {() => (
-            <Form className="">
+            <Form>
               <FormGroup className="mb-2">
                 <FormLabel htmlFor="login" className="w-100">
                   <Field
@@ -62,6 +83,7 @@ const LoginPage = () => {
                     className="w-100"
                     placeholder="Login"
                     aria-describedby="loginErrorMessage"
+                    onFocus={resetAuthError}
                     type="text" />
                 </FormLabel>
 
@@ -79,6 +101,7 @@ const LoginPage = () => {
                     className="w-100"
                     placeholder="Password"
                     aria-describedby="passwordErrorMessage"
+                    onFocus={resetAuthError}
                     type="password" />
                 </FormLabel>
 
@@ -86,6 +109,10 @@ const LoginPage = () => {
                   <ErrorMessage id="passwordErrorMessage" name="password"/>
                 </p>
               </FormGroup>
+
+              <p className="error-message mb-2">
+                { authError.hasError ? authError.errorMessage : null }
+              </p>
 
               <Button type="submit">
               Log in
