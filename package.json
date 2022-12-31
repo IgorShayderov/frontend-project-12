@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@hexlet/chat-server": "^1.1.6",
+    "@reduxjs/toolkit": "^1.9.1",
     "axios": "^1.2.1",
     "bootstrap": "^5.2.3",
     "formik": "^2.2.9",
