@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import axios from 'axios';
+import { Nav } from 'react-bootstrap';
 
 import Root from './routes/root.jsx';
 import ErrorPage from './routes/error-page.jsx';
@@ -27,7 +28,13 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <header className="header">Hexlet chat</header>
+    <Nav className="header">
+      <Nav.Item>
+        <Nav.Link href="/">
+          Hexlet chat
+        </Nav.Link>
+      </Nav.Item>
+    </Nav>
 
     <RouterProvider router={router} />
   </React.StrictMode>,
