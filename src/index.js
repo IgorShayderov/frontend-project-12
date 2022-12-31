@@ -1,12 +1,15 @@
-import './index.css';
+import './index.scss';
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import axios from 'axios';
 
 import Root from './routes/root.jsx';
 import ErrorPage from './routes/error-page.jsx';
 import LoginPage from './routes/login-page.jsx';
+
+axios.defaults.baseURL = 'api/v1';
 
 const router = createBrowserRouter([
   {
