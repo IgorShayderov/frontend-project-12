@@ -30,11 +30,12 @@ const LoginPage = () => {
 
   const handleSubmit = async ({ login, password }) => {
     try {
-      const { token } = await axios.post('login', {
+      const { data } = await axios.post('login', {
         username: login,
         password,
       });
-      localStorage.setItem('token', token);
+
+      localStorage.setItem('token', data.token);
       navigate('/');
     } catch ({ response }) {
       updateAuthError({
@@ -50,7 +51,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center h-100">
+    <main className="d-flex justify-content-center align-items-center h-100">
       <article className="login border border-primary rounded-2 p-3">
         <h1 className="login__title">Login</h1>
 
@@ -121,7 +122,7 @@ const LoginPage = () => {
           )}
         </Formik>
       </article>
-    </div>
+    </main>
   );
 };
 

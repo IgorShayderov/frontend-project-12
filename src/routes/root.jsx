@@ -1,24 +1,46 @@
+import axios from 'axios';
 import React, { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useImmer } from 'use-immer';
 
 const Root = () => {
-  const location = useLocation();
   const navigate = useNavigate();
+  const [, updateChannels] = useImmer({
+    data: [],
+    currentChannelId: null,
+    messages: [],
+  });
+
+  const loadChannels = async (token) => {
+    const { data } = await axios.get('data', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const { channels, currentChannelId, messages } = data;
+
+    updateChannels({
+      currentChannelId,
+      channels,
+      messages,
+    });
+  };
 
   useEffect(() => {
     const token = localStorage.getItem('token');
 
     if (token === null) {
+      console.info('navigate');
       navigate('/login');
+    } else {
+      loadChannels(token);
     }
-  }, [location]);
+  }, []);
 
   return (
-    <>
-      <div id="sidebar">
-        <h1>React Router Contacts</h1>
-      </div>
-    </>
+    <main>
+      <h1>Root page</h1>
+    </main>
   );
 };
 
