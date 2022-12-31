@@ -9,7 +9,7 @@
     "eject": "react-scripts eject",
     "server": "start-server"
   },
-  "proxy": "http://localhost:5001",
+  "proxy": "http://127.0.0.1:5001",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -33,12 +33,14 @@
     "axios": "^1.2.1",
     "bootstrap": "^5.2.3",
     "formik": "^2.2.9",
+    "immer": "^9.0.16",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
     "sass": "^1.57.1",
+    "use-immer": "^0.8.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {
