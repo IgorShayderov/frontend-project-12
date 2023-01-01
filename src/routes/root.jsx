@@ -1,29 +1,15 @@
-import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useImmer } from 'use-immer';
+import { useSelector } from 'react-redux';
+
+import { fetchChannels } from '../slices/channels-slice';
 
 const Root = () => {
   const navigate = useNavigate();
-  const [, updateChannels] = useImmer({
-    data: [],
-    currentChannelId: null,
-    messages: [],
-  });
+  const { channels, currentChannelId, messages } = useSelector((store) => store.channels);
 
   const loadChannels = async (token) => {
-    const { data } = await axios.get('data', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const { channels, currentChannelId, messages } = data;
-
-    updateChannels({
-      currentChannelId,
-      channels,
-      messages,
-    });
+    fetchChannels(token);
   };
 
   useEffect(() => {
