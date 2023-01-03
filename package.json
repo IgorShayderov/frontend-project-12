@@ -42,6 +42,7 @@
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
     "sass": "^1.57.1",
+    "socket.io-client": "^4.5.4",
     "use-immer": "^0.8.1",
     "yup": "^0.32.11"
   },
