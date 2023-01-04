@@ -11,23 +11,26 @@ import Message from '../components/message.jsx';
 const Root = () => {
   const socket = io();
 
-  socket.on('newMessage', (payload) => {
-    console.info(payload, 'newMessage event fired');
-  });
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { channels, currentChannelId, messages } = useSelector((store) => store.channels);
 
+  const [currentChannel, setChannel] = useState(currentChannelId);
   const loadChannels = async (token) => {
     dispatch(fetchChannels(token));
   };
+
+  socket.on('newMessage', (payload) => {
+    const token = localStorage.getItem('token');
+
+    console.info(payload, 'newMessage event fired');
+    dispatch(fetchChannels(token));
+  });
 
   useEffect(() => {
     const token = localStorage.getItem('token');
 
     if (token === null) {
-      console.info('navigate');
       navigate('/login');
     } else {
       loadChannels(token);
@@ -36,7 +39,7 @@ const Root = () => {
 
   const changeChannel = (channelId) => (event) => {
     event.preventDefault();
-    console.info(channelId);
+    setChannel(channelId);
   };
 
   const [newMessage, setNewMessage] = useState('');
@@ -67,7 +70,7 @@ const Root = () => {
               <Channel
                 key={id}
                 id={id}
-                activeChannelId={currentChannelId}
+                activeChannelId={currentChannel}
                 name={name}
                 changeChannel={changeChannel} />
             ))}
@@ -76,9 +79,9 @@ const Root = () => {
 
         <div className="col-10 bg-white d-flex flex-column ps-0">
           <div className="flex-grow-1">
-            <ul className="list-group">
+            <ul className="list-group h-100 flex-column-reverse">
               {messages
-                .filter(({ channelId }) => channelId === currentChannelId)
+                .filter(({ channelId }) => channelId === currentChannel)
                 .map(({ id, body, username }) => (
                   <Message
                     key={id}

@@ -14,7 +14,7 @@ export const fetchChannels = createAsyncThunk('data', async (token) => {
 
 const initialState = {
   channels: [],
-  currentChannelId: '',
+  currentChannelId: 1,
   messages: [],
 };
 
