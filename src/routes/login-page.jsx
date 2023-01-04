@@ -88,7 +88,7 @@ const LoginPage = () => {
                     type="text" />
                 </FormLabel>
 
-                <p className="error-message m-0">
+                <p className="text-danger m-0">
                   <ErrorMessage id="loginErrorMessage" name="login"/>
                 </p>
               </FormGroup>
@@ -106,12 +106,12 @@ const LoginPage = () => {
                     type="password" />
                 </FormLabel>
 
-                <p className="error-message m-0">
+                <p className="text-danger m-0">
                   <ErrorMessage id="passwordErrorMessage" name="password"/>
                 </p>
               </FormGroup>
 
-              <p className="error-message mb-2">
+              <p className="text-danger mb-2">
                 { authError.hasError ? authError.errorMessage : null }
               </p>
 
