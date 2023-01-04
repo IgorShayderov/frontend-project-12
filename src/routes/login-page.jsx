@@ -36,6 +36,7 @@ const LoginPage = () => {
       });
 
       localStorage.setItem('token', data.token);
+      localStorage.setItem('currentUser', data.username);
       navigate('/');
     } catch ({ response }) {
       updateAuthError({

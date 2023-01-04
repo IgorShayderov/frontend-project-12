@@ -6,7 +6,7 @@ const Message = (props) => {
   const { username, text } = props;
 
   return (
-    <li className="list-group-item">
+    <li className="list-group-item border-0">
       { `${username}: ${text}` }
     </li>
   );

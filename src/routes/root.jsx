@@ -44,12 +44,13 @@ const Root = () => {
 
   const [newMessage, setNewMessage] = useState('');
   const sendMessage = (event) => {
+    const username = localStorage.getItem('currentUser');
     event.preventDefault();
 
     socket.emit('newMessage', {
       body: newMessage,
       channelId: currentChannelId,
-      username: 'admin',
+      username,
     });
     setNewMessage('');
   };
