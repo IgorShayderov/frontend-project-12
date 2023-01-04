@@ -8,24 +8,17 @@ import { fetchChannels } from '../slices/channels-slice';
 import Channel from '../components/channel.jsx';
 import Message from '../components/message.jsx';
 
-const Root = () => {
-  const socket = io();
+const socket = io();
 
+const Root = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { channels, currentChannelId, messages } = useSelector((store) => store.channels);
 
-  const [currentChannel, setChannel] = useState(currentChannelId);
+  const [usedChannelId, setChannel] = useState(currentChannelId);
   const loadChannels = async (token) => {
     dispatch(fetchChannels(token));
   };
-
-  socket.on('newMessage', (payload) => {
-    const token = localStorage.getItem('token');
-
-    console.info(payload, 'newMessage event fired');
-    dispatch(fetchChannels(token));
-  });
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -35,6 +28,17 @@ const Root = () => {
     } else {
       loadChannels(token);
     }
+
+    socket.on('newMessage', (payload) => {
+      const token = localStorage.getItem('token');
+
+      console.info(payload, 'newMessage event fired');
+      dispatch(fetchChannels(token));
+    });
+
+    return () => {
+      socket.off('newMessage');
+    };
   }, []);
 
   const changeChannel = (channelId) => (event) => {
@@ -49,7 +53,7 @@ const Root = () => {
 
     socket.emit('newMessage', {
       body: newMessage,
-      channelId: currentChannelId,
+      channelId: usedChannelId,
       username,
     });
     setNewMessage('');
@@ -71,7 +75,7 @@ const Root = () => {
               <Channel
                 key={id}
                 id={id}
-                activeChannelId={currentChannel}
+                activeChannelId={usedChannelId}
                 name={name}
                 changeChannel={changeChannel} />
             ))}
@@ -82,7 +86,7 @@ const Root = () => {
           <div className="flex-grow-1">
             <ul className="list-group h-100 flex-column-reverse">
               {messages
-                .filter(({ channelId }) => channelId === currentChannel)
+                .filter(({ channelId }) => channelId === usedChannelId)
                 .map(({ id, body, username }) => (
                   <Message
                     key={id}
