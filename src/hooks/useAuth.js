@@ -1,8 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const useProvideAuth = () => {
   const [currentUser, setUser] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      const user = localStorage.getItem('currentUser');
+
+      setUser(user);
+    }
+  }, []);
 
   const signIn = (username, password) => axios.post('login', {
     username,

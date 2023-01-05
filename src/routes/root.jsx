@@ -7,10 +7,13 @@ import { fetchChannels } from '../slices/channels-slice';
 
 import Channel from '../components/channel.jsx';
 import Message from '../components/message.jsx';
+import { useAuth } from '../components/auth-provider.jsx';
 
 const socket = io();
 
 const Root = () => {
+  const auth = useAuth();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { channels, currentChannelId, messages } = useSelector((store) => store.channels);
@@ -46,13 +49,12 @@ const Root = () => {
 
   const [newMessage, setNewMessage] = useState('');
   const sendMessage = (event) => {
-    const username = localStorage.getItem('currentUser');
     event.preventDefault();
 
     socket.emit('newMessage', {
       body: newMessage,
       channelId: usedChannelId,
-      username,
+      username: auth.currentUser,
     });
     setNewMessage('');
   };
