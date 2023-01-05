@@ -14,7 +14,7 @@ export const fetchChannels = createAsyncThunk('data', async (token) => {
 
 const initialState = {
   channels: [],
-  currentChannelId: 1,
+  currentChannelId: 0,
   messages: [],
 };
 
@@ -25,8 +25,14 @@ const channelsSlice = createSlice({
     builder.addCase(fetchChannels.fulfilled, (state, action) => {
       const { channels, currentChannelId, messages } = action.payload;
 
-      state.channels = channels;
-      state.currentChannelId = currentChannelId;
+      if (state.channels.length === 0) {
+        state.channels = channels;
+      }
+
+      if (state.currentChannelId === 0) {
+        state.currentChannelId = currentChannelId;
+      }
+
       state.messages = messages;
     });
   },
