@@ -20,9 +20,9 @@ const Root = () => {
     dispatch(fetchChannels(token));
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
+  useEffect(() => {
     if (token === null) {
       navigate('/login');
     } else {
@@ -30,8 +30,6 @@ const Root = () => {
     }
 
     socket.on('newMessage', (payload) => {
-      const token = localStorage.getItem('token');
-
       console.info(payload, 'newMessage event fired');
       dispatch(fetchChannels(token));
     });

@@ -10,9 +10,12 @@ import {
 } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import * as Yup from 'yup';
-import axios from 'axios';
+
+import { useAuth } from '../components/auth-provider.jsx';
 
 const LoginPage = () => {
+  const auth = useAuth();
+
   const error = useRouteError();
   console.error(error, 'router error?');
 
@@ -30,13 +33,7 @@ const LoginPage = () => {
 
   const handleSubmit = async ({ login, password }) => {
     try {
-      const { data } = await axios.post('login', {
-        username: login,
-        password,
-      });
-
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('currentUser', data.username);
+      auth.signIn(login, password);
       navigate('/');
     } catch ({ response }) {
       updateAuthError({

@@ -11,6 +11,7 @@ import Root from './routes/root.jsx';
 import ErrorPage from './routes/error-page.jsx';
 import LoginPage from './routes/login-page.jsx';
 import store from './slices/index.js';
+import AuthProvider from './components/auth-provider.jsx';
 
 axios.defaults.baseURL = 'api/v1';
 
@@ -31,15 +32,17 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Nav className="header border-bottom">
-        <Nav.Item>
-          <Nav.Link href="/">
-            Hexlet chat
-          </Nav.Link>
-        </Nav.Item>
-      </Nav>
+      <AuthProvider>
+        <Nav className="header border-bottom">
+          <Nav.Item>
+            <Nav.Link href="/">
+              Hexlet chat
+            </Nav.Link>
+          </Nav.Item>
+        </Nav>
 
-      <RouterProvider router={router} />
+        <RouterProvider router={router} />
+      </AuthProvider>
     </Provider>
   </React.StrictMode>,
 );
