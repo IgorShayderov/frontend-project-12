@@ -91,6 +91,7 @@ const Root = () => {
                   <Message
                     key={id}
                     text={body}
+                    isHighlighted={username === auth.currentUser}
                     username={username} />
                 ))}
             </ul>
