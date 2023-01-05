@@ -8,7 +8,8 @@ const useProvideAuth = () => {
     const token = localStorage.getItem('token');
 
     if (token) {
-      const user = localStorage.getItem('currentUser');
+      const defaultUsername = 'unknown';
+      const user = localStorage.getItem('currentUser') ?? defaultUsername;
 
       setUser(user);
     }
