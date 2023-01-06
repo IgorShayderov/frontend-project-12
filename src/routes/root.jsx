@@ -3,16 +3,38 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import io from 'socket.io-client';
 
-import { fetchChannels } from '../slices/channels-slice';
+import { fetchChannels, actions } from '../slices/channels-slice';
+import { useAuth } from '../components/auth-provider.jsx';
 
 import Channel from '../components/channel.jsx';
 import Message from '../components/message.jsx';
-import { useAuth } from '../components/auth-provider.jsx';
+import getModal from '../modals';
+
+const renderModal = ({
+  isModalShown, modalType, handleClose, addChannel, renameChannel, removeChannel, channels,
+}) => {
+  if (modalType === null) {
+    return null;
+  }
+
+  const Modal = getModal(modalType);
+
+  return (<Modal
+    show={isModalShown}
+    handleClose={handleClose}
+    channels={channels}
+    addChannel={addChannel}
+    renameChannel={renameChannel}
+    removeChannel={removeChannel} />);
+};
 
 const socket = io();
 
 const Root = () => {
   const auth = useAuth();
+
+  const [isModalShown, setModalShown] = useState(false);
+  const [modalType, setModalType] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -21,6 +43,31 @@ const Root = () => {
   const [usedChannelId, setChannel] = useState(currentChannelId);
   const loadChannels = async (token) => {
     dispatch(fetchChannels(token));
+  };
+
+  const handleAddChannel = () => {
+    setModalType('adding');
+    setModalShown(true);
+  };
+
+  const addChannel = ({ name }) => {
+    dispatch(actions.addChannel({ name }));
+    setModalShown(false);
+  };
+
+  const renameChannel = ({ name, text }) => {
+    dispatch(actions.renameChannel({ name, text }));
+    setModalShown(false);
+  };
+
+  const removeChannel = (name) => {
+    dispatch(actions.removeChannel({ name }));
+    setModalShown(false);
+  };
+
+  const handleClose = () => {
+    setModalType(null);
+    setModalShown(false);
   };
 
   const token = localStorage.getItem('token');
@@ -68,7 +115,13 @@ const Root = () => {
 
       <div className="row flex-grow-1">
         <div className="col-2 bg-light">
-          <h2>Channels</h2>
+          <p className="d-flex align-items-center justify-content-between px-1 mb-2">
+            Channels
+            <button
+              className="bg-light add-btn"
+              aria-label="Add channel"
+              onClick={handleAddChannel}>+</button>
+          </p>
 
           <ul className="list-group">
             {channels.map(({ id, name }) => (
@@ -111,6 +164,16 @@ const Root = () => {
           </div>
         </div>
       </div>
+
+      { renderModal({
+        isModalShown,
+        modalType,
+        handleClose,
+        addChannel,
+        renameChannel,
+        removeChannel,
+        channels,
+      }) }
     </div>
   );
 };

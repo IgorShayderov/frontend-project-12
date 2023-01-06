@@ -8,7 +8,7 @@ const Channel = (props) => {
   } = props;
 
   const isActive = activeChannelId === id;
-  const channelClasses = cn('list-group-item', {
+  const channelClasses = cn('list-group-item rounded-0', {
     active: isActive,
   });
   const linkClasses = cn({
