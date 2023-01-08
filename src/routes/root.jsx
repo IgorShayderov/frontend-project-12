@@ -49,7 +49,6 @@ const Root = () => {
   const dispatch = useDispatch();
   const { channels, currentChannelId, messages } = useSelector((store) => store.channels);
 
-  const [usedChannelId, setChannel] = useState(currentChannelId);
   const loadChannels = async (token) => {
     dispatch(fetchChannels(token));
   };
@@ -100,12 +99,12 @@ const Root = () => {
     }
 
     socket.on('newMessage', (payload) => {
-      console.info(payload, 'newMessage event fired');
       dispatch(actions.addMessage(payload));
     });
 
     socket.on('newChannel', (payload) => {
       dispatch(actions.addChannel(payload));
+      dispatch(actions.setChannel(payload.id));
     });
 
     socket.on('renameChannel', (payload) => {
@@ -123,7 +122,7 @@ const Root = () => {
 
   const changeChannel = (channelId) => (event) => {
     event.preventDefault();
-    setChannel(channelId);
+    dispatch(actions.setChannel(channelId));
   };
 
   const [newMessage, setNewMessage] = useState('');
@@ -132,7 +131,7 @@ const Root = () => {
 
     socket.emit('newMessage', {
       body: newMessage,
-      channelId: usedChannelId,
+      channelId: currentChannelId,
       username: auth.currentUser,
     });
     setNewMessage('');
@@ -160,7 +159,7 @@ const Root = () => {
               <Channel
                 key={channel.id}
                 channel={channel}
-                activeChannelId={usedChannelId}
+                activeChannelId={currentChannelId}
                 changeChannel={changeChannel}
                 handleRename={openRenameModal}
                 handleRemove={openRemoveModal} />
@@ -172,7 +171,7 @@ const Root = () => {
           <div className="flex-grow-1">
             <ul className="list-group h-100 flex-column-reverse">
               {messages
-                .filter(({ channelId }) => channelId === usedChannelId)
+                .filter(({ channelId }) => channelId === currentChannelId)
                 .map(({ id, body, username }) => (
                   <Message
                     key={id}

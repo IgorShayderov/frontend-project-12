@@ -25,6 +25,9 @@ const channelsSlice = createSlice({
     addMessage: (state, { payload }) => {
       state.messages.push(payload);
     },
+    setChannel: (state, { payload }) => {
+      state.currentChannelId = payload;
+    },
     addChannel: (state, { payload }) => {
       const { name } = payload;
       const lastChannelId = state.channels.at(-1)?.id || 0;
