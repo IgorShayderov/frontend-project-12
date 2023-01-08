@@ -60,7 +60,9 @@ const Root = () => {
   };
 
   const addChannel = ({ name }) => {
-    dispatch(actions.addChannel({ name }));
+    socket.emit('newChannel', {
+      name,
+    });
     setModalShown(false);
   };
 
@@ -107,6 +109,10 @@ const Root = () => {
     socket.on('newMessage', (payload) => {
       console.info(payload, 'newMessage event fired');
       dispatch(actions.addMessage(payload));
+    });
+
+    socket.on('newChannel', (payload) => {
+      dispatch(actions.addChannel(payload));
     });
 
     return () => {
