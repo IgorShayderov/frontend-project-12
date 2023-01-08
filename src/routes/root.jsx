@@ -106,7 +106,7 @@ const Root = () => {
 
     socket.on('newMessage', (payload) => {
       console.info(payload, 'newMessage event fired');
-      dispatch(fetchChannels(token));
+      dispatch(actions.addMessage(payload));
     });
 
     return () => {

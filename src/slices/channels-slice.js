@@ -22,8 +22,8 @@ const channelsSlice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
-    setChannel() {
-      //
+    addMessage: (state, { payload }) => {
+      state.messages.push(payload);
     },
     addChannel: (state, { payload }) => {
       const { name } = payload;
@@ -59,14 +59,8 @@ const channelsSlice = createSlice({
     builder.addCase(fetchChannels.fulfilled, (state, action) => {
       const { channels, currentChannelId, messages } = action.payload;
 
-      if (state.channels.length === 0) {
-        state.channels = channels;
-      }
-
-      if (state.currentChannelId === 0) {
-        state.currentChannelId = currentChannelId;
-      }
-
+      state.channels = channels;
+      state.currentChannelId = currentChannelId;
       state.messages = messages;
     });
   },
