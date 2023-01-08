@@ -72,8 +72,10 @@ const Root = () => {
     setModalShown(false);
   };
 
-  const removeChannel = (name) => {
-    dispatch(actions.removeChannel({ name }));
+  const removeChannel = () => {
+    dispatch(actions.removeChannel({
+      id: editingChannelId,
+    }));
     setModalShown(false);
   };
 
