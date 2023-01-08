@@ -117,7 +117,7 @@ const Root = () => {
     });
 
     return () => {
-      socket.off('newMessage');
+      socket.off();
     };
   }, []);
 
