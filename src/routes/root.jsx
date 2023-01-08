@@ -70,9 +70,7 @@ const Root = () => {
   };
 
   const removeChannel = () => {
-    dispatch(actions.removeChannel({
-      id: editingChannelId,
-    }));
+    socket.emit('removeChannel', { id: editingChannelId });
     setModalShown(false);
   };
 
@@ -112,6 +110,10 @@ const Root = () => {
 
     socket.on('renameChannel', (payload) => {
       dispatch(actions.renameChannel(payload));
+    });
+
+    socket.on('removeChannel', (payload) => {
+      dispatch(actions.removeChannel(payload));
     });
 
     return () => {

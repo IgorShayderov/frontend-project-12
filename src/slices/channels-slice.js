@@ -48,10 +48,10 @@ const channelsSlice = createSlice({
     removeChannel: (state, { payload }) => {
       const { id } = payload;
 
-      const removableChannelId = state.channels.findIndex((channel) => channel.id === id);
+      const removableChannelIndex = state.channels.findIndex((channel) => channel.id === id);
 
-      if (removableChannelId !== -1) {
-        state.channels.splice(removableChannelId, 1);
+      if (removableChannelIndex !== -1) {
+        state.channels.splice(removableChannelIndex, 1);
       }
     },
   },
