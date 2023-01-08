@@ -60,17 +60,12 @@ const Root = () => {
   };
 
   const addChannel = ({ name }) => {
-    socket.emit('newChannel', {
-      name,
-    });
+    socket.emit('newChannel', { name });
     setModalShown(false);
   };
 
   const renameChannel = ({ text }) => {
-    dispatch(actions.renameChannel({
-      id: editingChannelId,
-      name: text,
-    }));
+    socket.emit('renameChannel', { id: editingChannelId, name: text });
     setModalShown(false);
   };
 
@@ -113,6 +108,10 @@ const Root = () => {
 
     socket.on('newChannel', (payload) => {
       dispatch(actions.addChannel(payload));
+    });
+
+    socket.on('renameChannel', (payload) => {
+      dispatch(actions.renameChannel(payload));
     });
 
     return () => {
