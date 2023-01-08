@@ -22,6 +22,9 @@ const channelsSlice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
+    setChannel() {
+      //
+    },
     addChannel: (state, { payload }) => {
       const { name } = payload;
       const lastChannelId = state.channels.at(-1)?.id || 0;
@@ -32,10 +35,10 @@ const channelsSlice = createSlice({
         name,
         removable: true,
       });
+      state.currentChannelId = newId;
     },
     renameChannel: (state, { payload }) => {
       const { id, name } = payload;
-
       const renamableChannel = state.channels.find((channel) => channel.id === id);
 
       if (renamableChannel !== undefined) {

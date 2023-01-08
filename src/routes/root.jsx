@@ -11,7 +11,14 @@ import Message from '../components/message.jsx';
 import getModal from '../modals';
 
 const renderModal = ({
-  isModalShown, modalType, handleClose, addChannel, renameChannel, removeChannel, channels,
+  isModalShown,
+  modalType,
+  handleClose,
+  addChannel,
+  renameChannel,
+  removeChannel,
+  channels,
+  channelName,
 }) => {
   if (modalType === null) {
     return null;
@@ -25,7 +32,8 @@ const renderModal = ({
     channels={channels}
     addChannel={addChannel}
     renameChannel={renameChannel}
-    removeChannel={removeChannel} />);
+    removeChannel={removeChannel}
+    channelName={channelName} />);
 };
 
 const socket = io();
@@ -35,6 +43,7 @@ const Root = () => {
 
   const [isModalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState(null);
+  const [editingChannelId, setEditingChannelId] = useState(0);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -55,8 +64,11 @@ const Root = () => {
     setModalShown(false);
   };
 
-  const renameChannel = ({ name, text }) => {
-    dispatch(actions.renameChannel({ name, text }));
+  const renameChannel = ({ text }) => {
+    dispatch(actions.renameChannel({
+      id: editingChannelId,
+      name: text,
+    }));
     setModalShown(false);
   };
 
@@ -68,6 +80,17 @@ const Root = () => {
   const handleClose = () => {
     setModalType(null);
     setModalShown(false);
+  };
+
+  const openRenameModal = (channelId) => () => {
+    setEditingChannelId(channelId);
+    setModalType('renaming');
+    setModalShown(true);
+  };
+  const openRemoveModal = (channelId) => () => {
+    setEditingChannelId(channelId);
+    setModalType('removing');
+    setModalShown(true);
   };
 
   const token = localStorage.getItem('token');
@@ -124,13 +147,14 @@ const Root = () => {
           </p>
 
           <ul className="list-group">
-            {channels.map(({ id, name }) => (
+            {channels.map((channel) => (
               <Channel
-                key={id}
-                id={id}
+                key={channel.id}
+                channel={channel}
                 activeChannelId={usedChannelId}
-                name={name}
-                changeChannel={changeChannel} />
+                changeChannel={changeChannel}
+                handleRename={openRenameModal}
+                handleRemove={openRemoveModal} />
             ))}
           </ul>
         </div>
@@ -173,6 +197,7 @@ const Root = () => {
         renameChannel,
         removeChannel,
         channels,
+        channelName: channels.find((channel) => channel.id === editingChannelId)?.name ?? '',
       }) }
     </div>
   );
