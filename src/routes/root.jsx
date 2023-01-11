@@ -112,7 +112,9 @@ const Root = () => {
     });
 
     socket.on('removeChannel', (payload) => {
-      dispatch(actions.removeChannel(payload));
+      const { id } = payload;
+
+      dispatch(actions.removeChannel(id));
     });
 
     return () => {

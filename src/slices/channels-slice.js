@@ -29,16 +29,10 @@ const channelsSlice = createSlice({
       state.currentChannelId = payload;
     },
     addChannel: (state, { payload }) => {
-      const { name } = payload;
-      const lastChannelId = state.channels.at(-1)?.id || 0;
-      const newId = lastChannelId + 1;
+      const { id } = payload;
 
-      state.channels.push({
-        id: newId,
-        name,
-        removable: true,
-      });
-      state.currentChannelId = newId;
+      state.channels.push(payload);
+      state.currentChannelId = id;
     },
     renameChannel: (state, { payload }) => {
       const { id } = payload;
@@ -49,23 +43,29 @@ const channelsSlice = createSlice({
       }
     },
     removeChannel: (state, { payload }) => {
-      const { id } = payload;
-
-      const removableChannelIndex = state.channels.findIndex((channel) => channel.id === id);
+      const removableChannelIndex = state.channels.findIndex((channel) => channel.id === payload);
 
       if (removableChannelIndex !== -1) {
         state.channels.splice(removableChannelIndex, 1);
+        state.messages = state.messages.filter((message) => message.id !== payload);
+
+        const defaultChannelId = 1;
+
+        if (state.currentChannelId === payload) {
+          state.currentChannelId = defaultChannelId;
+        }
       }
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchChannels.fulfilled, (state, action) => {
-      const { channels, currentChannelId, messages } = action.payload;
+    builder
+      .addCase(fetchChannels.fulfilled, (state, action) => {
+        const { channels, currentChannelId, messages } = action.payload;
 
-      state.channels = channels;
-      state.currentChannelId = currentChannelId;
-      state.messages = messages;
-    });
+        state.channels = channels;
+        state.currentChannelId = currentChannelId;
+        state.messages = messages;
+      });
   },
 });
 
