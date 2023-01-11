@@ -4,20 +4,41 @@ import {
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
+import { useImmer } from 'use-immer';
 
 const AddModal = (props) => {
   const {
-    handleClose, renameChannel, show, channelName,
+    handleClose, renameChannel, show, channelName, channels,
   } = props;
   const inputEl = useRef(null);
+
+  const [errorsState, updateErrorState] = useImmer({
+    isShown: false,
+    message: '',
+  });
+  const errorEl = useRef(null);
+
+  const resetErrorsState = () => {
+    updateErrorState((errorsState) => {
+      errorsState.message = '';
+      errorsState.isShown = false;
+    });
+  };
 
   const formik = useFormik({
     initialValues: {
       text: channelName,
     },
     onSubmit: (values, { resetForm }) => {
-      renameChannel(values);
-      resetForm();
+      if (!channels.some((channel) => channel.name === values.text)) {
+        renameChannel(values);
+        resetForm();
+      } else {
+        updateErrorState((errorsState) => {
+          errorsState.message = 'Name already exists!';
+          errorsState.isShown = true;
+        });
+      }
     },
   });
 
@@ -47,6 +68,7 @@ const AddModal = (props) => {
               type="text"
               ref={inputEl}
               onChange={formik.handleChange}
+              onInput={resetErrorsState}
               value={formik.values.text}
               className="mb-2"
               name="text"
@@ -56,6 +78,12 @@ const AddModal = (props) => {
             <FormControl
               value="Submit"
               type="submit"/>
+
+            <Form.Text
+              className="text-danger mb-2"
+              ref={errorEl}>
+              {errorsState.message}
+            </Form.Text>
           </FormGroup>
         </Form>
       </Modal.Body>
@@ -68,6 +96,7 @@ AddModal.propTypes = {
   renameChannel: PropTypes.func,
   show: PropTypes.bool,
   channelName: PropTypes.string,
+  channels: PropTypes.array,
 };
 
 export default AddModal;
