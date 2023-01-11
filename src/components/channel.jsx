@@ -38,7 +38,7 @@ const Channel = (props) => {
   return (
     <li className={channelClasses}>
       <a className={linkClasses} href="#" onClick={changeChannel(channel.id)}>
-        {channel.name}
+        # {channel.name}
       </a>
 
       { renderDropdown() }
