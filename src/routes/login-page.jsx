@@ -6,7 +6,7 @@ import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
 import {
-  useRouteError, useLocation, useNavigate,
+  useRouteError, useLocation, useNavigate, Link,
 } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import * as Yup from 'yup';
@@ -112,6 +112,12 @@ const LoginPage = () => {
               <p className="text-danger mb-2">
                 { authError.hasError ? authError.errorMessage : null }
               </p>
+
+              <div className="mb-2">
+                <Link to="/signup">
+                Don&apos;t have an account? Sign up
+                </Link>
+              </div>
 
               <FormGroup className="d-flex justify-content-center mb-2">
                 <Button type="submit">
