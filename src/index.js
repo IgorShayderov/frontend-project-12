@@ -12,6 +12,7 @@ import ErrorPage from './routes/error-page.jsx';
 import LoginPage from './routes/login-page.jsx';
 import store from './slices/index.js';
 import AuthProvider from './components/auth-provider.jsx';
+import SignUpPage from './routes/signup-page.jsx';
 
 axios.defaults.baseURL = 'api/v1';
 
@@ -24,6 +25,11 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/signup',
+    element: <SignUpPage />,
     errorElement: <ErrorPage />,
   },
 ]);

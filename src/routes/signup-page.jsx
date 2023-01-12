@@ -1,62 +1,34 @@
-import '../style/login-page.scss';
-
 import React, { useEffect, useRef } from 'react';
-import { Button, FormGroup, FormLabel } from 'react-bootstrap';
 import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
-import {
-  useRouteError, useLocation, useNavigate,
-} from 'react-router-dom';
-import { useImmer } from 'use-immer';
 import * as Yup from 'yup';
+import { Button, FormGroup, FormLabel } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
-import { useAuth } from '../components/auth-provider.jsx';
+const SignUpPage = () => {
+  const handleSubmit = () => {
+    //
+    console.info('hi!');
+  };
 
-const LoginPage = () => {
-  const auth = useAuth();
-
-  const error = useRouteError();
-  console.error(error, 'router error?');
-
-  const navigate = useNavigate();
   const location = useLocation();
   const loginInput = useRef(null);
-  const [authError, updateAuthError] = useImmer({
-    hasError: false,
-    errorMessage: '',
-  });
 
   useEffect(() => {
     loginInput.current.focus();
   }, [location]);
 
-  const handleSubmit = async ({ login, password }) => {
-    try {
-      auth.signIn(login, password);
-      navigate('/');
-    } catch ({ response }) {
-      updateAuthError({
-        hasError: true,
-        errorMessage: response.status === 401 ? 'Password or login is incorrect' : 'Server error',
-      });
-    }
-  };
-  const resetAuthError = () => {
-    updateAuthError((authError) => {
-      authError.hasError = false;
-    });
-  };
-
   return (
     <div className="d-flex justify-content-center align-items-center h-100">
       <article className="login border border-primary rounded-2 p-3">
-        <h1 className="login__title">Login</h1>
+        <h1 className="login__title">Sign up</h1>
 
         <Formik
           initialValues={{
             login: '',
             password: '',
+            passwordConfirmation: '',
           }}
           validationSchema={Yup.object({
             login: Yup.string()
@@ -67,6 +39,9 @@ const LoginPage = () => {
               .max(15, 'Must be 15 characters or less')
               .min(6, 'Must be at least 5 characters')
               .required('Password is required'),
+            passwordConfirmation: Yup.string()
+              .oneOf([Yup.ref('password'), null], 'Password must match')
+              .required('Password confirmation is required'),
           })}
           onSubmit={handleSubmit}
         >
@@ -77,12 +52,11 @@ const LoginPage = () => {
                   <Field
                     id="login"
                     innerRef={loginInput}
-                    autoComplete="username"
+                    autoComplete="off"
                     name="login"
                     className="w-100"
                     placeholder="Login"
                     aria-describedby="loginErrorMessage"
-                    onFocus={resetAuthError}
                     type="text" />
                 </FormLabel>
 
@@ -95,12 +69,11 @@ const LoginPage = () => {
                 <FormLabel htmlFor="password" className="w-100">
                   <Field
                     id="password"
-                    autoComplete="current-password"
+                    autoComplete="off"
                     name="password"
                     className="w-100"
                     placeholder="Password"
                     aria-describedby="passwordErrorMessage"
-                    onFocus={resetAuthError}
                     type="password" />
                 </FormLabel>
 
@@ -109,15 +82,29 @@ const LoginPage = () => {
                 </p>
               </FormGroup>
 
-              <p className="text-danger mb-2">
-                { authError.hasError ? authError.errorMessage : null }
-              </p>
+              <FormGroup className="mb-2">
+                <FormLabel htmlFor="passwordConfirmation" className="w-100">
+                  <Field
+                    id="passwordConfirmation"
+                    autoComplete="off"
+                    name="passwordConfirmation"
+                    className="w-100"
+                    placeholder="Password confirmation"
+                    aria-describedby="passwordConfirmationErrorMessage"
+                    type="password" />
+                </FormLabel>
+
+                <p className="text-danger m-0">
+                  <ErrorMessage id="passwordConfirmationErrorMessage" name="passwordConfirmation"/>
+                </p>
+              </FormGroup>
 
               <FormGroup className="d-flex justify-content-center mb-2">
                 <Button type="submit">
-                  Log in
+                  Sign up
                 </Button>
               </FormGroup>
+
             </Form>
           )}
         </Formik>
@@ -126,4 +113,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignUpPage;
