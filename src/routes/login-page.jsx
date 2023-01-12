@@ -65,7 +65,7 @@ const LoginPage = () => {
               .required('Login is required'),
             password: Yup.string()
               .max(15, 'Must be 15 characters or less')
-              .min(6, 'Must be at least 5 characters')
+              .min(5, 'Must be at least 5 characters')
               .required('Password is required'),
           })}
           onSubmit={handleSubmit}
