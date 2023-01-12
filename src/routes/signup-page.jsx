@@ -4,12 +4,32 @@ import {
 } from 'formik';
 import * as Yup from 'yup';
 import { Button, FormGroup, FormLabel } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useRouteError, useNavigate } from 'react-router-dom';
+import { useImmer } from 'use-immer';
+
+import { useAuth } from '../components/auth-provider.jsx';
 
 const SignUpPage = () => {
-  const handleSubmit = () => {
-    //
-    console.info('hi!');
+  const error = useRouteError();
+  console.error(error, 'router error?');
+
+  const auth = useAuth();
+  const navigate = useNavigate();
+  const [authError, updateAuthError] = useImmer({
+    hasError: false,
+    errorMessage: '',
+  });
+
+  const handleSubmit = async ({ login, password }) => {
+    try {
+      await auth.signUp(login, password);
+      navigate('/');
+    } catch ({ response }) {
+      updateAuthError({
+        hasError: true,
+        errorMessage: response.status === 409 ? 'Login is already exists' : 'Server error',
+      });
+    }
   };
 
   const location = useLocation();
@@ -98,6 +118,10 @@ const SignUpPage = () => {
                   <ErrorMessage id="passwordConfirmationErrorMessage" name="passwordConfirmation"/>
                 </p>
               </FormGroup>
+
+              <p className="text-danger mb-2">
+                { authError.hasError ? authError.errorMessage : null }
+              </p>
 
               <FormGroup className="d-flex justify-content-center mb-2">
                 <Button type="submit">

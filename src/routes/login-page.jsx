@@ -14,10 +14,10 @@ import * as Yup from 'yup';
 import { useAuth } from '../components/auth-provider.jsx';
 
 const LoginPage = () => {
-  const auth = useAuth();
-
   const error = useRouteError();
   console.error(error, 'router error?');
+
+  const auth = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,7 +33,7 @@ const LoginPage = () => {
 
   const handleSubmit = async ({ login, password }) => {
     try {
-      auth.signIn(login, password);
+      await auth.signIn(login, password);
       navigate('/');
     } catch ({ response }) {
       updateAuthError({
