@@ -14,7 +14,7 @@ import SignUpPage from './routes/signup-page.jsx';
 import store from './slices/index.js';
 import AuthProvider from './components/auth-provider.jsx';
 import Header from './components/header.jsx';
-import i18n from './i18n.js';
+import initI18n from './i18n.js';
 
 axios.defaults.baseURL = 'api/v1';
 
@@ -38,6 +38,7 @@ const router = createBrowserRouter([
 
 const initApp = async () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
+  const i18n = initI18n();
 
   root.render(
     <React.StrictMode>
