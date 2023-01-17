@@ -4,14 +4,15 @@ import {
 } from 'formik';
 import * as Yup from 'yup';
 import { Button, FormGroup, FormLabel } from 'react-bootstrap';
-import { useLocation, useRouteError, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useImmer } from 'use-immer';
+import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '../components/auth-provider.jsx';
+import getYupLocale from '../locales/getYupLocale.js';
 
 const SignUpPage = () => {
-  const error = useRouteError();
-  console.error(error, 'router error?');
+  const { t } = useTranslation();
 
   const auth = useAuth();
   const navigate = useNavigate();
@@ -36,6 +37,7 @@ const SignUpPage = () => {
   const loginInput = useRef(null);
 
   useEffect(() => {
+    Yup.setLocale(getYupLocale(t));
     loginInput.current.focus();
   }, [location]);
 
@@ -52,16 +54,16 @@ const SignUpPage = () => {
           }}
           validationSchema={Yup.object({
             login: Yup.string()
-              .max(20, 'Must be 15 characters or less')
-              .min(3, 'Must be at least 3 characters')
-              .required('Login is required'),
+              .max(20)
+              .min(3)
+              .required(),
             password: Yup.string()
-              .max(15, 'Must be 15 characters or less')
-              .min(6, 'Must be at least 5 characters')
-              .required('Password is required'),
+              .max(15)
+              .min(6)
+              .required(),
             passwordConfirmation: Yup.string()
-              .oneOf([Yup.ref('password'), null], 'Password must match')
-              .required('Password confirmation is required'),
+              .oneOf([Yup.ref('password'), null], t('fields.passwordConfirmation.errors.different'))
+              .required(),
           })}
           onSubmit={handleSubmit}
         >
@@ -75,7 +77,7 @@ const SignUpPage = () => {
                     autoComplete="off"
                     name="login"
                     className="w-100"
-                    placeholder="Login"
+                    placeholder={t('fields.login.placeholder')}
                     aria-describedby="loginErrorMessage"
                     type="text" />
                 </FormLabel>
@@ -92,7 +94,7 @@ const SignUpPage = () => {
                     autoComplete="off"
                     name="password"
                     className="w-100"
-                    placeholder="Password"
+                    placeholder={t('fields.password.placeholder')}
                     aria-describedby="passwordErrorMessage"
                     type="password" />
                 </FormLabel>
@@ -109,7 +111,7 @@ const SignUpPage = () => {
                     autoComplete="off"
                     name="passwordConfirmation"
                     className="w-100"
-                    placeholder="Password confirmation"
+                    placeholder={t('fields.passwordConfirmation.placeholder')}
                     aria-describedby="passwordConfirmationErrorMessage"
                     type="password" />
                 </FormLabel>
@@ -125,7 +127,7 @@ const SignUpPage = () => {
 
               <FormGroup className="d-flex justify-content-center mb-2">
                 <Button type="submit">
-                  Sign up
+                  { t('signUp.submit') }
                 </Button>
               </FormGroup>
 

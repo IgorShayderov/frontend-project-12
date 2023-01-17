@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import io from 'socket.io-client';
+import { useTranslation } from 'react-i18next';
 
 import { fetchChannels, actions } from '../slices/channels-slice';
 import { useAuth } from '../components/auth-provider.jsx';
@@ -39,6 +40,7 @@ const renderModal = ({
 const socket = io();
 
 const Root = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
 
   const [isModalShown, setModalShown] = useState(false);
@@ -144,12 +146,12 @@ const Root = () => {
 
   return (
     <div className="flex-grow-1 h-100 d-flex flex-column">
-      <h1 className="mx-3">Hexlet chat</h1>
+      <h1 className="mx-3">{ t('title') }</h1>
 
       <div className="row flex-grow-1">
         <div className="col-2 bg-light">
           <p className="d-flex align-items-center justify-content-between px-1 mb-2">
-            Channels
+            { t('channels') }
             <button
               className="bg-light add-btn"
               aria-label="Add channel"
@@ -189,7 +191,7 @@ const Root = () => {
               <input
                 className="w-100"
                 maxLength="100"
-                placeholder="Type your message..."
+                placeholder={t('fields.message.placeholder')}
                 value={newMessage}
                 onInput={onMessageInput} />
 

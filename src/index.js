@@ -38,7 +38,7 @@ const router = createBrowserRouter([
 
 const initApp = async () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
-  const i18n = initI18n();
+  const i18n = await initI18n();
 
   root.render(
     <React.StrictMode>

@@ -7,13 +7,15 @@ const initI18N = () => {
   const i18nextInstance = i18n.createInstance();
   const defaultLanguage = 'ru';
 
-  return i18nextInstance
+  i18nextInstance
     .use(initReactI18next)
     .init({
       lng: defaultLanguage,
       debug: true,
       resources,
     });
+
+  return i18nextInstance;
 };
 
 export default initI18N;

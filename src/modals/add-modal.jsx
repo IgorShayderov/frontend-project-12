@@ -3,12 +3,14 @@ import { Modal, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import { useImmer } from 'use-immer';
+import { useTranslation } from 'react-i18next';
 
 const AddModal = (props) => {
   const {
     handleClose, addChannel, show, channels,
   } = props;
   const inputEl = useRef(null);
+  const { t } = useTranslation();
 
   const [errorsState, updateErrorState] = useImmer({
     isShown: false,
@@ -33,7 +35,7 @@ const AddModal = (props) => {
         resetForm();
       } else {
         updateErrorState((errorsState) => {
-          errorsState.message = 'Name already exists!';
+          errorsState.message = t('modals.addModal.errors.uniqueness');
           errorsState.isShown = true;
         });
       }
@@ -57,7 +59,7 @@ const AddModal = (props) => {
   return (
     <Modal show={show} onHide={handleClose} centered>
       <Modal.Header>
-        <Modal.Title>Add channel</Modal.Title>
+        <Modal.Title>{ t('modals.addModal.title') }</Modal.Title>
 
         <button
           type="button"
@@ -89,7 +91,7 @@ const AddModal = (props) => {
             </Form.Text>
 
             <Form.Control
-              value="Submit"
+              value={ t('modals.addModal.submit') }
               type="submit"/>
           </Form.Group>
         </Form>

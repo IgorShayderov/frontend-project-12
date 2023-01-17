@@ -3,9 +3,11 @@ import {
   Modal, Form, FormGroup, FormControl,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 const AddModal = (props) => {
   const { handleClose, removeChannel, show } = props;
+  const { t } = useTranslation();
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -15,7 +17,7 @@ const AddModal = (props) => {
   return (
     <Modal show={show} onHide={handleClose} centered>
       <Modal.Header>
-        <Modal.Title>Remove channel</Modal.Title>
+        <Modal.Title>{ t('modals.removeModal.title') }</Modal.Title>
 
         <button
           type="button"
@@ -28,7 +30,7 @@ const AddModal = (props) => {
         <Form onSubmit={onSubmit}>
           <FormGroup>
             <FormControl
-              value="Submit"
+              value={ t('modals.removeModal.submit') }
               type="submit" />
           </FormGroup>
         </Form>

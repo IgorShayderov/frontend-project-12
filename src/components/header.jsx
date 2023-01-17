@@ -1,10 +1,12 @@
 import React from 'react';
 import { Nav } from 'react-bootstrap';
 import cn from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { useAuth } from './auth-provider.jsx';
 
 const Header = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
   const handleSignOut = () => {
     auth.signOut();
@@ -18,13 +20,13 @@ const Header = () => {
     <Nav className="justify-content-between border-bottom">
       <Nav.Item>
         <Nav.Link href="/">
-          Hexlet chat
+          { t('header.chatLink') }
         </Nav.Link>
       </Nav.Item>
 
       <Nav.Item className={signOutClasses}>
         <Nav.Link href="#" onClick={handleSignOut}>
-          Sign out
+          { t('header.signOut') }
         </Nav.Link>
       </Nav.Item>
     </Nav>

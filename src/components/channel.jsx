@@ -2,6 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import { Dropdown } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 const Channel = (props) => {
   const {
@@ -12,6 +13,7 @@ const Channel = (props) => {
     handleRemove,
   } = props;
 
+  const { t } = useTranslation();
   const isActive = activeChannelId === channel.id;
   const channelClasses = cn(
     'list-group-item rounded-0',
@@ -29,8 +31,8 @@ const Channel = (props) => {
       <Dropdown.Toggle variant="white" className="border-0" />
 
       <Dropdown.Menu>
-        <Dropdown.Item onClick={handleRename(channel.id)}>Rename</Dropdown.Item>
-        <Dropdown.Item onClick={handleRemove(channel.id)}>Remove</Dropdown.Item>
+        <Dropdown.Item onClick={handleRename(channel.id)}>{ t('channel.rename') }</Dropdown.Item>
+        <Dropdown.Item onClick={handleRemove(channel.id)}>{ t('channel.remove') }</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>) : null
   );

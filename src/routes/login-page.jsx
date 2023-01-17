@@ -5,17 +5,16 @@ import { Button, FormGroup, FormLabel } from 'react-bootstrap';
 import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
-import {
-  useRouteError, useLocation, useNavigate, Link,
-} from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '../components/auth-provider.jsx';
+import getYupLocale from '../locales/getYupLocale.js';
 
 const LoginPage = () => {
-  const error = useRouteError();
-  console.error(error, 'router error?');
+  const { t } = useTranslation();
 
   const auth = useAuth();
 
@@ -28,6 +27,7 @@ const LoginPage = () => {
   });
 
   useEffect(() => {
+    Yup.setLocale(getYupLocale(t));
     loginInput.current.focus();
   }, [location]);
 
@@ -38,7 +38,7 @@ const LoginPage = () => {
     } catch ({ response }) {
       updateAuthError({
         hasError: true,
-        errorMessage: response.status === 401 ? 'Password or login is incorrect' : 'Server error',
+        errorMessage: response.status === 401 ? t('login.errors.401') : t('login.errors.request'),
       });
     }
   };
@@ -51,7 +51,7 @@ const LoginPage = () => {
   return (
     <div className="d-flex justify-content-center align-items-center h-100">
       <article className="login border border-primary rounded-2 p-3">
-        <h1 className="login__title">Login</h1>
+        <h1 className="login__title">{ t('login.title') }</h1>
 
         <Formik
           initialValues={{
@@ -60,13 +60,13 @@ const LoginPage = () => {
           }}
           validationSchema={Yup.object({
             login: Yup.string()
-              .max(20, 'Must be 15 characters or less')
-              .min(3, 'Must be at least 3 characters')
-              .required('Login is required'),
+              .max(20)
+              .min(3)
+              .required(),
             password: Yup.string()
-              .max(15, 'Must be 15 characters or less')
-              .min(5, 'Must be at least 5 characters')
-              .required('Password is required'),
+              .max(15)
+              .min(5)
+              .required(),
           })}
           onSubmit={handleSubmit}
         >
@@ -80,7 +80,7 @@ const LoginPage = () => {
                     autoComplete="username"
                     name="login"
                     className="w-100"
-                    placeholder="Login"
+                    placeholder={t('fields.login.placeholder')}
                     aria-describedby="loginErrorMessage"
                     onFocus={resetAuthError}
                     type="text" />
@@ -98,7 +98,7 @@ const LoginPage = () => {
                     autoComplete="current-password"
                     name="password"
                     className="w-100"
-                    placeholder="Password"
+                    placeholder={t('fields.password.placeholder')}
                     aria-describedby="passwordErrorMessage"
                     onFocus={resetAuthError}
                     type="password" />
@@ -115,13 +115,13 @@ const LoginPage = () => {
 
               <div className="mb-2">
                 <Link to="/signup">
-                Don&apos;t have an account? Sign up
+                  {t('login.signUpLink')}
                 </Link>
               </div>
 
               <FormGroup className="d-flex justify-content-center mb-2">
                 <Button type="submit">
-                  Log in
+                  {t('login.submit')}
                 </Button>
               </FormGroup>
             </Form>
