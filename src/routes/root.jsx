@@ -12,6 +12,10 @@ import Channel from '../components/channel.jsx';
 import Message from '../components/message.jsx';
 import getModal from '../modals';
 
+const filter = require('leo-profanity');
+
+filter.loadDictionary('ru');
+
 const renderModal = ({
   isModalShown,
   modalType,
@@ -143,7 +147,7 @@ const Root = () => {
     event.preventDefault();
 
     socket.emit('newMessage', {
-      body: newMessage,
+      body: filter.clean(newMessage),
       channelId: currentChannelId,
       username: auth.currentUser,
     });
