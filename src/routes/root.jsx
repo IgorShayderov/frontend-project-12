@@ -204,7 +204,7 @@ const Root = () => {
                 value={newMessage}
                 onInput={onMessageInput} />
 
-              <input type="submit" value="Send" />
+              <input className="w-100" type="submit" value="Send" />
             </form>
           </div>
         </div>
