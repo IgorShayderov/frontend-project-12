@@ -2,6 +2,13 @@ export default {
   translation: {
     title: 'Hexlet chat',
     channels: 'Channels',
+    actions: {
+      channel: {
+        add: 'Channel has been successfully added',
+        rename: 'Channel has been successfully renamed',
+        remove: 'Channel has been successfully removed',
+      },
+    },
     header: {
       chatLink: 'Hexlet chat',
       signOut: 'Sign out',
@@ -74,6 +81,9 @@ export default {
     channel: {
       rename: 'Rename',
       remove: 'Remove',
+    },
+    errors: {
+      dataLoad: 'Unexpected error occurs while downloading the data',
     },
   },
 };

@@ -2,6 +2,13 @@ export default {
   translation: {
     title: 'Чат Хекслета',
     channels: 'Каналы',
+    actions: {
+      channel: {
+        add: 'Канал был успешно добавлен',
+        rename: 'Канал был успешно переименован',
+        remove: 'Канал был успешно удалён',
+      },
+    },
     header: {
       chatLink: 'Чат Хекслета',
       signOut: 'Выход',
@@ -73,6 +80,9 @@ export default {
     channel: {
       rename: 'Переименовать',
       remove: 'Удалить',
+    },
+    errors: {
+      dataLoad: 'Произошла ошибка при загрузке данных',
     },
   },
 };

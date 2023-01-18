@@ -15,6 +15,7 @@ import store from './slices/index.js';
 import AuthProvider from './components/auth-provider.jsx';
 import Header from './components/header.jsx';
 import initI18n from './i18n.js';
+import ToastProvider from './components/toast-provider.jsx';
 
 axios.defaults.baseURL = 'api/v1';
 
@@ -45,9 +46,11 @@ const initApp = async () => {
       <Provider store={store}>
         <I18nextProvider i18n={i18n}>
           <AuthProvider>
-            <Header />
+            <ToastProvider>
+              <Header />
 
-            <RouterProvider router={router} />
+              <RouterProvider router={router} />
+            </ToastProvider>
           </AuthProvider>
         </I18nextProvider>
       </Provider>

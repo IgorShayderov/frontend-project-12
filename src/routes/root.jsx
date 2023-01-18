@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { fetchChannels, actions } from '../slices/channels-slice';
 import { useAuth } from '../components/auth-provider.jsx';
+import { useToast } from '../components/toast-provider.jsx';
 
 import Channel from '../components/channel.jsx';
 import Message from '../components/message.jsx';
@@ -42,6 +43,7 @@ const socket = io();
 const Root = () => {
   const { t } = useTranslation();
   const auth = useAuth();
+  const toast = useToast();
 
   const [isModalShown, setModalShown] = useState(false);
   const [modalType, setModalType] = useState(null);
@@ -63,16 +65,19 @@ const Root = () => {
   const addChannel = ({ name }) => {
     socket.emit('newChannel', { name });
     setModalShown(false);
+    toast.notify(t('actions.channel.add'));
   };
 
   const renameChannel = ({ text }) => {
     socket.emit('renameChannel', { id: editingChannelId, name: text });
     setModalShown(false);
+    toast.notify(t('actions.channel.rename'));
   };
 
   const removeChannel = () => {
     socket.emit('removeChannel', { id: editingChannelId });
     setModalShown(false);
+    toast.notify(t('actions.channel.remove'));
   };
 
   const handleClose = () => {
@@ -97,7 +102,11 @@ const Root = () => {
     if (token === null) {
       navigate('/login');
     } else {
-      loadChannels(token);
+      try {
+        loadChannels(token);
+      } catch {
+        toast.warn(t('actions.errors.dataLoad'));
+      }
     }
 
     socket.on('newMessage', (payload) => {
