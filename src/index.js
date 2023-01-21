@@ -16,6 +16,7 @@ import AuthProvider from './components/auth-provider.jsx';
 import Header from './components/header.jsx';
 import initI18n from './i18n.js';
 import ToastProvider from './components/toast-provider.jsx';
+import RollbackProvider from './components/rollback-provider.jsx';
 
 axios.defaults.baseURL = 'api/v1';
 
@@ -43,17 +44,20 @@ const initApp = async () => {
 
   root.render(
     <React.StrictMode>
-      <Provider store={store}>
-        <I18nextProvider i18n={i18n}>
-          <AuthProvider>
-            <ToastProvider>
-              <Header />
+      <RollbackProvider>
+        <Provider store={store}>
+          <I18nextProvider i18n={i18n}>
+            <AuthProvider>
+              <ToastProvider>
+                <Header />
 
-              <RouterProvider router={router} />
-            </ToastProvider>
-          </AuthProvider>
-        </I18nextProvider>
-      </Provider>
+                <RouterProvider router={router} />
+              </ToastProvider>
+            </AuthProvider>
+          </I18nextProvider>
+        </Provider>
+
+      </RollbackProvider>
     </React.StrictMode>,
   );
 };
