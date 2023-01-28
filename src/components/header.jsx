@@ -20,7 +20,7 @@ const Header = () => {
     <Nav className="justify-content-between border-bottom">
       <Nav.Item>
         <Nav.Link href="/">
-          { t('header.chatLink') }
+          Hexlet Chat
         </Nav.Link>
       </Nav.Item>
 

@@ -1,6 +1,5 @@
 export default {
   translation: {
-    title: 'Чат Хекслета',
     channels: 'Каналы',
     actions: {
       channel: {
@@ -10,7 +9,6 @@ export default {
       },
     },
     header: {
-      chatLink: 'Чат Хекслета',
       signOut: 'Выход',
     },
     login: {

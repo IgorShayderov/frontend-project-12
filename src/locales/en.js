@@ -1,6 +1,5 @@
 export default {
   translation: {
-    title: 'Hexlet chat',
     channels: 'Channels',
     actions: {
       channel: {
@@ -10,7 +9,6 @@ export default {
       },
     },
     header: {
-      chatLink: 'Hexlet chat',
       signOut: 'Sign out',
     },
     login: {

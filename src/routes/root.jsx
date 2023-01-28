@@ -159,8 +159,6 @@ const Root = () => {
 
   return (
     <div className="flex-grow-1 h-100 d-flex flex-column">
-      <h1 className="mx-3">{ t('title') }</h1>
-
       <div className="row flex-grow-1">
         <div className="col-2 bg-light">
           <p className="d-flex align-items-center justify-content-between px-1 mb-2">
