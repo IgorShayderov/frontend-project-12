@@ -21,6 +21,7 @@ export default {
       submit: 'Войти',
     },
     signUp: {
+      title: 'Регистрация',
       submit: 'Зарегистрироваться',
     },
     error: {

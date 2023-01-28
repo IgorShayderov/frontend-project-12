@@ -44,7 +44,7 @@ const SignUpPage = () => {
   return (
     <div className="d-flex justify-content-center align-items-center h-100">
       <article className="login border border-primary rounded-2 p-3">
-        <h1 className="login__title">Sign up</h1>
+        <h1 className="login__title">{ t('signUp.title') }</h1>
 
         <Formik
           initialValues={{

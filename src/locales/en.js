@@ -21,6 +21,7 @@ export default {
       submit: 'Log in',
     },
     signUp: {
+      title: 'Sign up',
       submit: 'Sign up',
     },
     error: {
