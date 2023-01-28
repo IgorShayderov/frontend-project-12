@@ -17,7 +17,9 @@ export default {
         401: 'Password or login is incorrect',
         request: 'Server error',
       },
-      signUpLink: 'Don\'t have an account? Sign up',
+      signUpText: 'Don\'t have an account? ',
+      signUpLink: 'Sign up',
+
       submit: 'Log in',
     },
     signUp: {

@@ -114,6 +114,7 @@ const LoginPage = () => {
               </p>
 
               <div className="mb-2">
+                {t('login.signUpText')}
                 <Link to="/signup">
                   {t('login.signUpLink')}
                 </Link>

@@ -17,7 +17,8 @@ export default {
         401: 'Пароль или логин неверен',
         request: 'Ошибка сервера',
       },
-      signUpLink: 'Нет аккаунта? Регистрация',
+      signUpText: 'Нет аккаунта? ',
+      signUpLink: 'Регистрация',
       submit: 'Войти',
     },
     signUp: {
