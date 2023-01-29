@@ -51,9 +51,9 @@ export default {
     },
     fields: {
       login: {
-        placeholder: 'Логин',
+        placeholder: 'Имя пользователя',
         errors: {
-          required: 'Логин обязателен',
+          required: 'Имя пользователя обязателено',
         },
       },
       password: {
