@@ -53,15 +53,9 @@ export default {
     fields: {
       login: {
         placeholder: 'Login',
-        errors: {
-          required: 'Login is required',
-        },
       },
       password: {
         placeholder: 'Password',
-        errors: {
-          required: 'Password is required',
-        },
       },
       passwordConfirmation: {
         placeholder: 'Password confirmation',
@@ -76,7 +70,7 @@ export default {
       errors: {
         max: 'Must be {{ max }} characters or less',
         min: 'Must be at least {{ min }} characters',
-        required: '{{ field }} is required',
+        required: 'Is required',
       },
     },
     channel: {

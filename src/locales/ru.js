@@ -52,15 +52,9 @@ export default {
     fields: {
       login: {
         placeholder: 'Имя пользователя',
-        errors: {
-          required: 'Имя пользователя обязателено',
-        },
       },
       password: {
         placeholder: 'Пароль',
-        errors: {
-          required: 'Пароль обязателен',
-        },
       },
       passwordConfirmation: {
         placeholder: 'Подтверждение пароля',
@@ -75,7 +69,7 @@ export default {
       errors: {
         max: 'Должно быть максимум {{ max }} символов',
         min: 'Должно быть минимум {{ min }} символа',
-        required: '{{ field }} обязательное поле',
+        required: 'Обязательное поле',
       },
     },
     channel: {

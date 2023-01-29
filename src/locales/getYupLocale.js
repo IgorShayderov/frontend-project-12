@@ -4,6 +4,6 @@ export default (t) => ({
     min: ({ min }) => t('fields.errors.min', { min }),
   },
   mixed: {
-    required: ({ path }) => t(`fields.${path}.errors.required`),
+    required: () => t('fields.errors.required'),
   },
 });
