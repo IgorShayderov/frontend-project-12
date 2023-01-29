@@ -60,12 +60,12 @@ const LoginPage = () => {
           }}
           validationSchema={Yup.object({
             login: Yup.string()
-              .max(20)
-              .min(3)
+              .max(20, t('fields.login.errors.max', { min: 3, max: 20 }))
+              .min(3, t('fields.login.errors.min', { min: 3, max: 20 }))
               .required(),
             password: Yup.string()
-              .max(15)
-              .min(5)
+              .max(15, t('fields.password.errors.max', { max: 15 }))
+              .min(5, t('fields.password.errors.min', { min: 5 }))
               .required(),
           })}
           onSubmit={handleSubmit}

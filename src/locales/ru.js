@@ -52,23 +52,28 @@ export default {
     fields: {
       login: {
         placeholder: 'Имя пользователя',
+        errors: {
+          max: 'От {{ min }} до {{ max }} символов',
+          min: 'От {{ min }} до {{ max }} символов',
+        },
       },
       password: {
         placeholder: 'Пароль',
+        errors: {
+          max: 'Не более {{ max }} символов',
+          min: 'Не менее {{ min }} символов',
+        },
       },
       passwordConfirmation: {
         placeholder: 'Подтвердите пароль',
         errors: {
-          required: 'Подтверждение пароля обязательно',
-          different: 'Подтверждение пароля не должно отличаться от пароля',
+          different: 'Пароли должны совпадать',
         },
       },
       message: {
         placeholder: 'Введите ваше сообщение...',
       },
       errors: {
-        max: 'Должно быть максимум {{ max }} символов',
-        min: 'Должно быть минимум {{ min }} символа',
         required: 'Обязательное поле',
       },
     },

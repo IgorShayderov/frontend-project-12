@@ -54,12 +54,12 @@ const SignUpPage = () => {
           }}
           validationSchema={Yup.object({
             login: Yup.string()
-              .max(20)
-              .min(3)
+              .max(20, t('fields.login.errors.min', { min: 3, max: 20 }))
+              .min(3, t('fields.login.errors.min', { min: 3, max: 20 }))
               .required(),
             password: Yup.string()
-              .max(15)
-              .min(6)
+              .max(15, t('fields.password.errors.max', { max: 15 }))
+              .min(6, t('fields.password.errors.min', { min: 6 }))
               .required(),
             passwordConfirmation: Yup.string()
               .oneOf([Yup.ref('password'), null], t('fields.passwordConfirmation.errors.different'))

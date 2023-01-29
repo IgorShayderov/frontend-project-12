@@ -60,7 +60,6 @@ export default {
       passwordConfirmation: {
         placeholder: 'Password confirmation',
         errors: {
-          required: 'Password confirmation is required',
           diferrent: 'Password confirmation should not differs from password',
         },
       },
