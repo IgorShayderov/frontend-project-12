@@ -72,44 +72,47 @@ const LoginPage = () => {
         >
           {() => (
             <Form>
-              <FormGroup>
+              <FormGroup className="form-floating">
+                <Field
+                  id="login"
+                  innerRef={loginInput}
+                  autoComplete="username"
+                  name="login"
+                  className="form-control"
+                  aria-describedby="loginErrorMessage"
+                  onFocus={resetAuthError}
+                  type="text" />
+
                 <FormLabel htmlFor="login" className="w-100 m-0">
-                  <Field
-                    id="login"
-                    innerRef={loginInput}
-                    autoComplete="username"
-                    name="login"
-                    className="w-100"
-                    placeholder={t('fields.login.placeholder')}
-                    aria-describedby="loginErrorMessage"
-                    onFocus={resetAuthError}
-                    type="text" />
+                  { t('fields.login.placeholder') }
                 </FormLabel>
 
-                <p className="error-message text-danger m-0">
+                <p className="error-message text-danger ps-2 m-0">
                   <ErrorMessage id="loginErrorMessage" name="login"/>
                 </p>
               </FormGroup>
 
-              <FormGroup>
+              <FormGroup className="form-floating">
+
+                <Field
+                  id="password"
+                  autoComplete="current-password"
+                  name="password"
+                  className="form-control"
+                  aria-describedby="passwordErrorMessage"
+                  onFocus={resetAuthError}
+                  type="password" />
+
                 <FormLabel htmlFor="password" className="w-100 m-0">
-                  <Field
-                    id="password"
-                    autoComplete="current-password"
-                    name="password"
-                    className="w-100"
-                    placeholder={t('fields.password.placeholder')}
-                    aria-describedby="passwordErrorMessage"
-                    onFocus={resetAuthError}
-                    type="password" />
+                  {t('fields.password.placeholder')}
                 </FormLabel>
 
-                <p className="error-message text-danger m-0">
+                <p className="error-message text-danger ps-2 m-0">
                   <ErrorMessage id="passwordErrorMessage" name="password"/>
                 </p>
               </FormGroup>
 
-              <p className="text-danger mb-2">
+              <p className="error-message text-danger ps-2 m-0">
                 { authError.hasError ? authError.errorMessage : null }
               </p>
 
