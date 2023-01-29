@@ -72,8 +72,8 @@ const LoginPage = () => {
         >
           {() => (
             <Form>
-              <FormGroup className="mb-2">
-                <FormLabel htmlFor="login" className="w-100">
+              <FormGroup>
+                <FormLabel htmlFor="login" className="w-100 m-0">
                   <Field
                     id="login"
                     innerRef={loginInput}
@@ -86,13 +86,13 @@ const LoginPage = () => {
                     type="text" />
                 </FormLabel>
 
-                <p className="text-danger m-0">
+                <p className="error-message text-danger m-0">
                   <ErrorMessage id="loginErrorMessage" name="login"/>
                 </p>
               </FormGroup>
 
-              <FormGroup className="mb-2">
-                <FormLabel htmlFor="password" className="w-100">
+              <FormGroup>
+                <FormLabel htmlFor="password" className="w-100 m-0">
                   <Field
                     id="password"
                     autoComplete="current-password"
@@ -104,7 +104,7 @@ const LoginPage = () => {
                     type="password" />
                 </FormLabel>
 
-                <p className="text-danger m-0">
+                <p className="error-message text-danger m-0">
                   <ErrorMessage id="passwordErrorMessage" name="password"/>
                 </p>
               </FormGroup>

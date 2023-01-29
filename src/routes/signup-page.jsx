@@ -69,8 +69,8 @@ const SignUpPage = () => {
         >
           {() => (
             <Form>
-              <FormGroup className="mb-2">
-                <FormLabel htmlFor="login" className="w-100">
+              <FormGroup>
+                <FormLabel htmlFor="login" className="w-100 m-0">
                   <Field
                     id="login"
                     innerRef={loginInput}
@@ -82,13 +82,13 @@ const SignUpPage = () => {
                     type="text" />
                 </FormLabel>
 
-                <p className="text-danger m-0">
+                <p className="error-message text-danger m-0">
                   <ErrorMessage id="loginErrorMessage" name="login"/>
                 </p>
               </FormGroup>
 
-              <FormGroup className="mb-2">
-                <FormLabel htmlFor="password" className="w-100">
+              <FormGroup>
+                <FormLabel htmlFor="password" className="w-100 m-0">
                   <Field
                     id="password"
                     autoComplete="off"
@@ -99,13 +99,13 @@ const SignUpPage = () => {
                     type="password" />
                 </FormLabel>
 
-                <p className="text-danger m-0">
+                <p className="error-message text-danger m-0">
                   <ErrorMessage id="passwordErrorMessage" name="password"/>
                 </p>
               </FormGroup>
 
-              <FormGroup className="mb-2">
-                <FormLabel htmlFor="passwordConfirmation" className="w-100">
+              <FormGroup>
+                <FormLabel htmlFor="passwordConfirmation" className="w-100 m-0">
                   <Field
                     id="passwordConfirmation"
                     autoComplete="off"
@@ -116,7 +116,7 @@ const SignUpPage = () => {
                     type="password" />
                 </FormLabel>
 
-                <p className="text-danger m-0">
+                <p className="error-message text-danger m-0">
                   <ErrorMessage id="passwordConfirmationErrorMessage" name="passwordConfirmation"/>
                 </p>
               </FormGroup>
