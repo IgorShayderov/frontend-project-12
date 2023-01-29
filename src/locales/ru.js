@@ -57,7 +57,7 @@ export default {
         placeholder: 'Пароль',
       },
       passwordConfirmation: {
-        placeholder: 'Подтверждение пароля',
+        placeholder: 'Подтвердите пароль',
         errors: {
           required: 'Подтверждение пароля обязательно',
           different: 'Подтверждение пароля не должно отличаться от пароля',
