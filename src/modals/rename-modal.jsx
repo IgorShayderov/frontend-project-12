@@ -67,6 +67,7 @@ const AddModal = (props) => {
         <Form onSubmit={formik.handleSubmit}>
           <FormGroup className="form-floating">
             <FormControl
+              id="new-channel-input"
               type="text"
               ref={inputEl}
               onChange={formik.handleChange}
