@@ -28,7 +28,9 @@ const Channel = (props) => {
 
   const renderDropdown = () => (
     channel.removable ? (<Dropdown className="d-inline">
-      <Dropdown.Toggle variant="white" className="border-0" />
+      <Dropdown.Toggle variant="white" className="border-0">
+        <span className="visually-hidden">{ t('channel.management') }</span>
+      </Dropdown.Toggle>
 
       <Dropdown.Menu>
         <Dropdown.Item onClick={handleRename(channel.id)}>{ t('channel.rename') }</Dropdown.Item>

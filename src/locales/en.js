@@ -77,6 +77,7 @@ export default {
     channel: {
       rename: 'Rename',
       remove: 'Remove',
+      management: 'Channel management',
     },
     errors: {
       dataLoad: 'Unexpected error occurs while downloading the data',

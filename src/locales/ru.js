@@ -83,6 +83,7 @@ export default {
     channel: {
       rename: 'Переименовать',
       remove: 'Удалить',
+      management: 'Управление каналом',
     },
     errors: {
       dataLoad: 'Произошла ошибка при загрузке данных',
