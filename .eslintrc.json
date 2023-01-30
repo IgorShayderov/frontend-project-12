@@ -4,9 +4,8 @@
     "es2021": true
   },
   "extends": [
-    "eslint:recommended",
+    "airbnb",
     "plugin:react/recommended",
-    "airbnb-base",
     "plugin:functional/recommended",
     "plugin:react-hooks/recommended"
   ],
@@ -15,20 +14,17 @@
     "ecmaFeatures": {
       "jsx": true
     },
-    "ecmaVersion": "latest"
+    "ecmaVersion": "latest",
+    "sourceType": "module"
   },
   "rules": {
     "import/extensions": "off",
-    "import/prefer-default-export": "off",
-    "indent": ["error", 2],
-    "no-param-reassign": "off",
-    "no-shadow": "off",
     "import/no-unresolved": "off",
     "react/prop-types": "off",
     "no-console": "off",
     "react/react-in-jsx-scope": "off",
-    "functional/no-conditional-statement": "off",
-    "functional/no-expression-statement": "off",
+    "functional/no-conditional-statements": "off",
+    "functional/no-expression-statements": "off",
     "functional/immutable-data": "off",
     "functional/functional-parameters": "off",
     "functional/no-try-statement": "off",
