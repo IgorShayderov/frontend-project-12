@@ -53,6 +53,7 @@ export default {
     fields: {
       login: {
         placeholder: 'Login',
+        placeholder2: 'Login',
       },
       password: {
         placeholder: 'Password',

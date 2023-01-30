@@ -52,6 +52,7 @@ export default {
     fields: {
       login: {
         placeholder: 'Имя пользователя',
+        placeholder2: 'Ваш ник',
         errors: {
           max: 'От {{ min }} до {{ max }} символов',
           min: 'От {{ min }} до {{ max }} символов',

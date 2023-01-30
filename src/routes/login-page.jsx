@@ -85,7 +85,7 @@ const LoginPage = () => {
                   type="text" />
 
                 <FormLabel htmlFor="login" className="w-100 m-0">
-                  { t('fields.login.placeholder') }
+                  { t('fields.login.placeholder2') }
                 </FormLabel>
 
                 <p className="error-message text-danger ps-2 m-0">
