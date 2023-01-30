@@ -3,15 +3,13 @@ import '../style/login-page.scss';
 import React, { useEffect, useRef } from 'react';
 import { Button, FormGroup, FormLabel } from 'react-bootstrap';
 import {
-  Formik, Form, Field, ErrorMessage,
+  Formik, Form, Field,
 } from 'formik';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useImmer } from 'use-immer';
-import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '../components/auth-provider.jsx';
-import getYupLocale from '../locales/getYupLocale.js';
 
 const LoginPage = () => {
   const { t } = useTranslation();
@@ -27,7 +25,6 @@ const LoginPage = () => {
   });
 
   useEffect(() => {
-    Yup.setLocale(getYupLocale(t));
     loginInput.current.focus();
   }, [location]);
 
@@ -58,21 +55,11 @@ const LoginPage = () => {
             login: '',
             password: '',
           }}
-          validationSchema={Yup.object({
-            login: Yup.string()
-              .max(20, t('fields.login.errors.max', { min: 3, max: 20 }))
-              .min(3, t('fields.login.errors.min', { min: 3, max: 20 }))
-              .required(),
-            password: Yup.string()
-              .max(15, t('fields.password.errors.max', { max: 15 }))
-              .min(5, t('fields.password.errors.min', { min: 5 }))
-              .required(),
-          })}
           onSubmit={handleSubmit}
         >
           {() => (
             <Form>
-              <FormGroup className="form-floating">
+              <FormGroup className="form-floating mb-4">
                 <Field
                   id="login"
                   innerRef={loginInput}
@@ -87,10 +74,6 @@ const LoginPage = () => {
                 <FormLabel htmlFor="login" className="w-100 m-0">
                   { t('fields.login.placeholder2') }
                 </FormLabel>
-
-                <p className="error-message text-danger ps-2 m-0">
-                  <ErrorMessage id="loginErrorMessage" name="login"/>
-                </p>
               </FormGroup>
 
               <FormGroup className="form-floating">
@@ -108,13 +91,9 @@ const LoginPage = () => {
                 <FormLabel htmlFor="password" className="w-100 m-0">
                   {t('fields.password.placeholder')}
                 </FormLabel>
-
-                <p className="error-message text-danger ps-2 m-0">
-                  <ErrorMessage id="passwordErrorMessage" name="password"/>
-                </p>
               </FormGroup>
 
-              <p className="error-message text-danger ps-2 m-0">
+              <p className="error-message text-danger m-0">
                 { authError.hasError ? authError.errorMessage : null }
               </p>
 
