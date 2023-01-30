@@ -80,6 +80,7 @@ const LoginPage = () => {
                   name="login"
                   className="form-control"
                   aria-describedby="loginErrorMessage"
+                  placeholder="login"
                   onFocus={resetAuthError}
                   type="text" />
 
@@ -100,6 +101,7 @@ const LoginPage = () => {
                   name="password"
                   className="form-control"
                   aria-describedby="passwordErrorMessage"
+                  placeholder="password"
                   onFocus={resetAuthError}
                   type="password" />
 

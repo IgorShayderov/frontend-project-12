@@ -76,6 +76,7 @@ const SignUpPage = () => {
                   autoComplete="off"
                   name="login"
                   className="form-control"
+                  placeholder="login"
                   aria-describedby="loginErrorMessage"
                   type="text" />
 
@@ -95,6 +96,7 @@ const SignUpPage = () => {
                   name="password"
                   className="form-control"
                   aria-describedby="passwordErrorMessage"
+                  placeholder="password"
                   type="password" />
 
                 <FormLabel htmlFor="password" className="w-100 m-0">
@@ -112,6 +114,7 @@ const SignUpPage = () => {
                   autoComplete="off"
                   name="passwordConfirmation"
                   className="form-control"
+                  placeholder="password confirmation"
                   aria-describedby="passwordConfirmationErrorMessage"
                   type="password" />
 
