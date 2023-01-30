@@ -70,7 +70,7 @@ const AddModal = (props) => {
 
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
-          <Form.Group>
+          <Form.Group className="form-floating">
             <Form.Control
               id="new-channel-input"
               type="text"
@@ -83,6 +83,10 @@ const AddModal = (props) => {
               className="mb-2"
               placeholder="Name"
               required />
+
+            <Form.Label htmlFor="new-channel-input" className="w-100 m-0">
+              {t('modals.addModal.label')}
+            </Form.Label>
 
             <Form.Text
               className="text-danger mb-2"

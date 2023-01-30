@@ -65,7 +65,7 @@ const AddModal = (props) => {
 
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
-          <FormGroup>
+          <FormGroup className="form-floating">
             <FormControl
               type="text"
               ref={inputEl}
@@ -76,6 +76,10 @@ const AddModal = (props) => {
               name="text"
               autoComplete="off"
               required />
+
+            <Form.Label htmlFor="new-channel-input" className="w-100 m-0">
+              {t('modals.addModal.label')}
+            </Form.Label>
 
             <FormControl
               value={ t('modals.renameModal.submit') }

@@ -33,6 +33,7 @@ export default {
       addModal: {
         title: 'Добавить канал',
         submit: 'Отправить',
+        label: 'Имя канала',
         errors: {
           uniqueness: 'Имя уже существует!',
         },
@@ -42,7 +43,7 @@ export default {
         submit: 'Отправить',
       },
       renameModal: {
-        title: 'Переименовать channel',
+        title: 'Переименовать канал',
         submit: 'Отправить',
         errors: {
           uniqueness: 'Имя уже существует!',

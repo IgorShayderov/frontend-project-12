@@ -34,6 +34,7 @@ export default {
       addModal: {
         title: 'Add channel',
         submit: 'Submit',
+        label: 'Channel name',
         errors: {
           uniqueness: 'Name already exists!',
         },
