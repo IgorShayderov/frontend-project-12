@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Modal, Form, FormGroup, Button,
 } from 'react-bootstrap';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 const AddModal = (props) => {
@@ -39,12 +38,6 @@ const AddModal = (props) => {
       </Modal.Body>
     </Modal>
   );
-};
-
-AddModal.propTypes = {
-  handleClose: PropTypes.func,
-  removeChannel: PropTypes.func,
-  show: PropTypes.bool,
 };
 
 export default AddModal;

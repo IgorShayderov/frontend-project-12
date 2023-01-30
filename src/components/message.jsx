@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 const Message = (props) => {
@@ -14,12 +13,6 @@ const Message = (props) => {
       { `${username}: ${text}` }
     </li>
   );
-};
-
-Message.propTypes = {
-  username: PropTypes.string,
-  text: PropTypes.string,
-  isHighlighted: PropTypes.bool,
 };
 
 export default Message;

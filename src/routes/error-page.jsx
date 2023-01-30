@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-export default function ErrorPage() {
+const ErrorPage = () => {
   const { t } = useTranslation();
 
   return (
@@ -10,4 +10,6 @@ export default function ErrorPage() {
       <p>{ t('error.description') }</p>
     </div>
   );
-}
+};
+
+export default ErrorPage;

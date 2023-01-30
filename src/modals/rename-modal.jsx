@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import {
   Modal, Form, FormGroup, FormControl,
 } from 'react-bootstrap';
-import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import { useImmer } from 'use-immer';
 import { useTranslation } from 'react-i18next';
@@ -96,14 +95,6 @@ const AddModal = (props) => {
       </Modal.Body>
     </Modal>
   );
-};
-
-AddModal.propTypes = {
-  handleClose: PropTypes.func,
-  renameChannel: PropTypes.func,
-  show: PropTypes.bool,
-  channelName: PropTypes.string,
-  channels: PropTypes.array,
 };
 
 export default AddModal;

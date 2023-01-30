@@ -1,6 +1,5 @@
 import React from 'react';
 import cn from 'classnames';
-import PropTypes from 'prop-types';
 import { Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
@@ -48,18 +47,6 @@ const Channel = (props) => {
       { renderDropdown() }
     </li>
   );
-};
-
-Channel.propTypes = {
-  channel: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    removable: PropTypes.bool,
-  }),
-  activeChannelId: PropTypes.number,
-  changeChannel: PropTypes.func,
-  handleRename: PropTypes.func,
-  handleRemove: PropTypes.func,
 };
 
 export default Channel;
