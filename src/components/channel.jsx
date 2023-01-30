@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import cn from 'classnames';
 import { Dropdown } from 'react-bootstrap';
@@ -26,22 +27,26 @@ const Channel = (props) => {
   });
 
   const renderDropdown = () => (
-    channel.removable ? (<Dropdown className="d-inline">
-      <Dropdown.Toggle variant="white" className="border-0">
-        <span className="visually-hidden">{ t('channel.management') }</span>
-      </Dropdown.Toggle>
+    channel.removable ? (
+      <Dropdown className="d-inline">
+        <Dropdown.Toggle variant="white" className="border-0">
+          <span className="visually-hidden">{ t('channel.management') }</span>
+        </Dropdown.Toggle>
 
-      <Dropdown.Menu>
-        <Dropdown.Item onClick={handleRename(channel.id)}>{ t('channel.rename') }</Dropdown.Item>
-        <Dropdown.Item onClick={handleRemove(channel.id)}>{ t('channel.remove') }</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>) : null
+        <Dropdown.Menu>
+          <Dropdown.Item onClick={handleRename(channel.id)}>{ t('channel.rename') }</Dropdown.Item>
+          <Dropdown.Item onClick={handleRemove(channel.id)}>{ t('channel.remove') }</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    ) : null
   );
 
   return (
     <li className={channelClasses}>
       <a className={linkClasses} href="#" onClick={changeChannel(channel.id)}>
-        # {channel.name}
+        #
+        {' '}
+        {channel.name}
       </a>
 
       { renderDropdown() }

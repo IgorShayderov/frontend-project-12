@@ -22,7 +22,8 @@ const AddModal = (props) => {
           type="button"
           className="btn-close"
           aria-label="Close"
-          onClick={handleClose}></button>
+          onClick={handleClose}
+        />
       </Modal.Header>
 
       <Modal.Body>
@@ -30,7 +31,8 @@ const AddModal = (props) => {
           <FormGroup>
             <Button
               className="button btn-danger w-100"
-              type="submit">
+              type="submit"
+            >
               { t('modals.removeModal.submit') }
             </Button>
           </FormGroup>

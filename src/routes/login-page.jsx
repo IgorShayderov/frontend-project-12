@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-shadow */
 import '../style/login-page.scss';
 
 import React, { useEffect, useRef } from 'react';
@@ -69,7 +71,8 @@ const LoginPage = () => {
                   aria-describedby="loginErrorMessage"
                   placeholder="login"
                   onFocus={resetAuthError}
-                  type="text" />
+                  type="text"
+                />
 
                 <FormLabel htmlFor="login" className="w-100 m-0">
                   { t('fields.login.placeholder2') }
@@ -86,7 +89,8 @@ const LoginPage = () => {
                   aria-describedby="passwordErrorMessage"
                   placeholder="password"
                   onFocus={resetAuthError}
-                  type="password" />
+                  type="password"
+                />
 
                 <FormLabel htmlFor="password" className="w-100 m-0">
                   {t('fields.password.placeholder')}

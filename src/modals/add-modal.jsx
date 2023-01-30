@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-shadow */
 import React, { useEffect, useRef } from 'react';
 import { Modal, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
@@ -53,7 +55,7 @@ const AddModal = (props) => {
     if (show) {
       inputEl.current.focus();
     }
-  }, []);
+  }, [show]);
 
   return (
     <Modal show={show} onHide={handleClose} centered>
@@ -64,7 +66,8 @@ const AddModal = (props) => {
           type="button"
           className="btn-close"
           aria-label="Close"
-          onClick={handleClose}></button>
+          onClick={handleClose}
+        />
       </Modal.Header>
 
       <Modal.Body>
@@ -81,7 +84,8 @@ const AddModal = (props) => {
               autoComplete="off"
               className="mb-2"
               placeholder="Name"
-              required />
+              required
+            />
 
             <Form.Label htmlFor="new-channel-input" className="w-100 m-0">
               {t('modals.addModal.label')}
@@ -89,13 +93,15 @@ const AddModal = (props) => {
 
             <Form.Text
               className="text-danger mb-2"
-              ref={errorEl}>
+              ref={errorEl}
+            >
               {errorsState.message}
             </Form.Text>
 
             <Form.Control
-              value={ t('modals.addModal.submit') }
-              type="submit"/>
+              value={t('modals.addModal.submit')}
+              type="submit"
+            />
           </Form.Group>
         </Form>
       </Modal.Body>

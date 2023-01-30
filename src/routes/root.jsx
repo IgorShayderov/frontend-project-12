@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -32,14 +33,17 @@ const renderModal = ({
 
   const Modal = getModal(modalType);
 
-  return (<Modal
-    show={isModalShown}
-    handleClose={handleClose}
-    channels={channels}
-    addChannel={addChannel}
-    renameChannel={renameChannel}
-    removeChannel={removeChannel}
-    channelName={channelName} />);
+  return (
+    <Modal
+      show={isModalShown}
+      handleClose={handleClose}
+      channels={channels}
+      addChannel={addChannel}
+      renameChannel={renameChannel}
+      removeChannel={removeChannel}
+      channelName={channelName}
+    />
+  );
 };
 
 const socket = io();
@@ -135,7 +139,7 @@ const Root = () => {
     return () => {
       socket.off();
     };
-  }, []);
+  }, [dispatch, loadChannels, navigate, t, toast, token]);
 
   const changeChannel = (channelId) => (event) => {
     event.preventDefault();
@@ -166,7 +170,11 @@ const Root = () => {
             <button
               className="bg-light add-btn"
               aria-label="Add channel"
-              onClick={handleAddChannel}>+</button>
+              type="button"
+              onClick={handleAddChannel}
+            >
+              +
+            </button>
           </p>
 
           <ul className="list-group">
@@ -177,7 +185,8 @@ const Root = () => {
                 activeChannelId={currentChannelId}
                 changeChannel={changeChannel}
                 handleRename={openRenameModal}
-                handleRemove={openRemoveModal} />
+                handleRemove={openRemoveModal}
+              />
             ))}
           </ul>
         </div>
@@ -192,7 +201,8 @@ const Root = () => {
                     key={id}
                     text={body}
                     isHighlighted={username === auth.currentUser}
-                    username={username} />
+                    username={username}
+                  />
                 ))}
             </ul>
           </div>
@@ -205,7 +215,8 @@ const Root = () => {
                 maxLength="100"
                 placeholder={t('fields.message.placeholder')}
                 value={newMessage}
-                onInput={onMessageInput} />
+                onInput={onMessageInput}
+              />
 
               <input className="w-100" type="submit" value="Send" />
             </form>

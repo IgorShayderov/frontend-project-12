@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-shadow */
 import React, { useEffect, useRef } from 'react';
 import {
   Modal, Form, FormGroup, FormControl,
@@ -48,7 +50,7 @@ const AddModal = (props) => {
       inputEl.current.focus();
       inputEl.current.select();
     }
-  }, []);
+  }, [show]);
 
   return (
     <Modal show={show} onHide={handleClose} centered>
@@ -59,7 +61,8 @@ const AddModal = (props) => {
           type="button"
           className="btn-close"
           aria-label="Close"
-          onClick={handleClose}></button>
+          onClick={handleClose}
+        />
       </Modal.Header>
 
       <Modal.Body>
@@ -75,19 +78,22 @@ const AddModal = (props) => {
               className="mb-2"
               name="text"
               autoComplete="off"
-              required />
+              required
+            />
 
             <Form.Label htmlFor="new-channel-input" className="w-100 m-0">
               {t('modals.addModal.label')}
             </Form.Label>
 
             <FormControl
-              value={ t('modals.renameModal.submit') }
-              type="submit"/>
+              value={t('modals.renameModal.submit')}
+              type="submit"
+            />
 
             <Form.Text
               className="text-danger mb-2"
-              ref={errorEl}>
+              ref={errorEl}
+            >
               {errorsState.message}
             </Form.Text>
           </FormGroup>

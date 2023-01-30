@@ -39,7 +39,7 @@ const SignUpPage = () => {
   useEffect(() => {
     Yup.setLocale(getYupLocale(t));
     loginInput.current.focus();
-  }, [location]);
+  }, [location, t]);
 
   return (
     <div className="d-flex justify-content-center align-items-center h-100">
@@ -78,14 +78,15 @@ const SignUpPage = () => {
                   className="form-control"
                   placeholder="login"
                   aria-describedby="loginErrorMessage"
-                  type="text" />
+                  type="text"
+                />
 
                 <FormLabel htmlFor="login" className="w-100 m-0">
                   {t('fields.login.placeholder')}
                 </FormLabel>
 
                 <p className="error-message text-danger ps-2 m-0">
-                  <ErrorMessage id="loginErrorMessage" name="login"/>
+                  <ErrorMessage id="loginErrorMessage" name="login" />
                 </p>
               </FormGroup>
 
@@ -97,14 +98,15 @@ const SignUpPage = () => {
                   className="form-control"
                   aria-describedby="passwordErrorMessage"
                   placeholder="password"
-                  type="password" />
+                  type="password"
+                />
 
                 <FormLabel htmlFor="password" className="w-100 m-0">
                   {t('fields.password.placeholder')}
                 </FormLabel>
 
                 <p className="error-message text-danger ps-2 m-0">
-                  <ErrorMessage id="passwordErrorMessage" name="password"/>
+                  <ErrorMessage id="passwordErrorMessage" name="password" />
                 </p>
               </FormGroup>
 
@@ -116,14 +118,15 @@ const SignUpPage = () => {
                   className="form-control"
                   placeholder="password confirmation"
                   aria-describedby="passwordConfirmationErrorMessage"
-                  type="password" />
+                  type="password"
+                />
 
                 <FormLabel htmlFor="passwordConfirmation" className="w-100 m-0">
                   {t('fields.passwordConfirmation.placeholder')}
                 </FormLabel>
 
                 <p className="error-message text-danger ps-2 m-0">
-                  <ErrorMessage id="passwordConfirmationErrorMessage" name="passwordConfirmation"/>
+                  <ErrorMessage id="passwordConfirmationErrorMessage" name="passwordConfirmation" />
                 </p>
               </FormGroup>
 
