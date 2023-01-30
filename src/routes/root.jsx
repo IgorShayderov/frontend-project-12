@@ -200,6 +200,7 @@ const Root = () => {
           <div className="pb-3">
             <form onSubmit={sendMessage}>
               <input
+                aria-label={t('fields.message.ariaLabel')}
                 className="w-100"
                 maxLength="100"
                 placeholder={t('fields.message.placeholder')}

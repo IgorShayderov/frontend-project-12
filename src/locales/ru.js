@@ -72,6 +72,7 @@ export default {
         },
       },
       message: {
+        ariaLabel: 'Новое сообщение',
         placeholder: 'Введите ваше сообщение...',
       },
       errors: {
