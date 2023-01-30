@@ -6,17 +6,36 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "airbnb-base"
+    "airbnb-base",
+    "plugin:functional/recommended",
+    "plugin:react-hooks/recommended"
   ],
+  "plugins": ["react", "functional"],
   "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
     "ecmaVersion": "latest"
   },
   "rules": {
-    "no-console": ["error", { "allow": ["warn", "error", "info"] }],
     "import/extensions": "off",
     "import/prefer-default-export": "off",
     "indent": ["error", 2],
     "no-param-reassign": "off",
-    "no-shadow": "off"
+    "no-shadow": "off",
+    "import/no-unresolved": "off",
+    "react/prop-types": "off",
+    "no-console": "off",
+    "react/react-in-jsx-scope": "off",
+    "functional/no-conditional-statement": "off",
+    "functional/no-expression-statement": "off",
+    "functional/immutable-data": "off",
+    "functional/functional-parameters": "off",
+    "functional/no-try-statement": "off",
+    "functional/no-throw-statement": "off",
+    "no-underscore-dangle": [2, { "allow": ["__filename", "__dirname"] }],
+    "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
+    "testing-library/no-debug": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
   }
 }
