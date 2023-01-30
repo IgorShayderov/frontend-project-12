@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Modal, Form, FormGroup, FormControl,
+  Modal, Form, FormGroup, Button,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -29,9 +29,11 @@ const AddModal = (props) => {
       <Modal.Body>
         <Form onSubmit={onSubmit}>
           <FormGroup>
-            <FormControl
-              value={ t('modals.removeModal.submit') }
-              type="submit" />
+            <Button
+              className="button btn-danger w-100"
+              type="submit">
+              { t('modals.removeModal.submit') }
+            </Button>
           </FormGroup>
         </Form>
       </Modal.Body>
