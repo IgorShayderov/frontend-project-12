@@ -61,10 +61,6 @@ const Root = () => {
   const dispatch = useDispatch();
   const { channels, currentChannelId, messages } = useSelector((store) => store.channels);
 
-  const loadChannels = async (token) => {
-    dispatch(fetchChannels(token));
-  };
-
   const handleAddChannel = () => {
     setModalType('adding');
     setModalShown(true);
@@ -111,7 +107,7 @@ const Root = () => {
       navigate('/login');
     } else {
       try {
-        loadChannels(token);
+        dispatch(fetchChannels(token));
       } catch {
         toast.warn(t('actions.errors.dataLoad'));
       }
@@ -123,6 +119,7 @@ const Root = () => {
 
     socket.on('newChannel', (payload) => {
       dispatch(actions.addChannel(payload));
+      // TODO убрать чтобы всех пользователей не перекидывало
       dispatch(actions.setChannel(payload.id));
     });
 
@@ -139,7 +136,7 @@ const Root = () => {
     return () => {
       socket.off();
     };
-  }, [dispatch, loadChannels, navigate, t, toast, token]);
+  }, [dispatch, navigate, toast, token]);
 
   const changeChannel = (channelId) => (event) => {
     event.preventDefault();
