@@ -119,7 +119,6 @@ const Root = () => {
 
     socket.on('newChannel', (payload) => {
       dispatch(actions.addChannel(payload));
-      // TODO убрать чтобы всех пользователей не перекидывало
       dispatch(actions.setChannel(payload.id));
     });
 
@@ -192,7 +191,7 @@ const Root = () => {
 
         <div className="col-10 bg-white d-flex flex-column ps-0">
           <div className="flex-grow-1">
-            <ul className="list-group h-100 flex-column-reverse">
+            <ul className="list-group h-100 flex-column justify-content-end">
               {messages
                 .filter(({ channelId }) => channelId === currentChannelId)
                 .map(({ id, body, username }) => (
