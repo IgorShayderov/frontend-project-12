@@ -150,12 +150,14 @@ const Root = () => {
   const sendMessage = (event) => {
     event.preventDefault();
 
-    socket.emit('newMessage', {
-      body: filter.clean(newMessage),
-      channelId: currentChannelId,
-      username: auth.currentUser,
-    });
-    setNewMessage('');
+    if (newMessage.length > 0) {
+      socket.emit('newMessage', {
+        body: filter.clean(newMessage),
+        channelId: currentChannelId,
+        username: auth.currentUser,
+      });
+      setNewMessage('');
+    }
   };
   const onMessageInput = (event) => {
     setNewMessage(event.target.value);
@@ -218,7 +220,12 @@ const Root = () => {
                 onInput={onMessageInput}
               />
 
-              <input className="w-100" type="submit" value="Send" />
+              <input
+                disabled={newMessage.length === 0}
+                className="w-100"
+                type="submit"
+                value="Send"
+              />
             </form>
           </div>
         </div>
