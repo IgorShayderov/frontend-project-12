@@ -16,16 +16,12 @@ export const fetchChannels = createAsyncThunk('data', async (token) => {
 const initialState = {
   channels: [],
   currentChannelId: 1,
-  messages: [],
 };
 
 const channelsSlice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
-    addMessage: (state, { payload }) => {
-      state.messages.push(payload);
-    },
     setChannel: (state, { payload }) => {
       state.currentChannelId = payload;
     },
@@ -48,7 +44,6 @@ const channelsSlice = createSlice({
 
       if (removableChannelIndex !== -1) {
         state.channels.splice(removableChannelIndex, 1);
-        state.messages = state.messages.filter((message) => message.id !== payload);
 
         const defaultChannelId = 1;
 
@@ -61,11 +56,10 @@ const channelsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchChannels.fulfilled, (state, action) => {
-        const { channels, currentChannelId, messages } = action.payload;
+        const { channels, currentChannelId } = action.payload;
 
         state.channels = channels;
         state.currentChannelId = currentChannelId;
-        state.messages = messages;
       });
   },
 });

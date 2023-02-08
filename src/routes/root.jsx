@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import io from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
 
-import { fetchChannels, actions } from '../slices/channels-slice';
+import { fetchChannels, actions as channelsActions } from '../slices/channels-slice';
+import { actions as messagesActions } from '../slices/messages-slice';
 import { useAuth } from '../components/auth-provider.jsx';
 import { useToast } from '../components/toast-provider.jsx';
 
@@ -59,7 +60,8 @@ const Root = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { channels, currentChannelId, messages } = useSelector((store) => store.channels);
+  const { channels, currentChannelId } = useSelector((store) => store.channels);
+  const { messages } = useSelector((store) => store.messages);
 
   const handleAddChannel = () => {
     setModalType('adding');
@@ -69,7 +71,7 @@ const Root = () => {
   const addChannel = async ({ name }) => {
     const data = await socket.emit('newChannel', { name });
 
-    dispatch(actions.setChannel(data.id));
+    dispatch(channelsActions.setChannel(data.id));
     setModalShown(false);
     toast.notify(t('actions.channel.add'));
   };
@@ -116,21 +118,21 @@ const Root = () => {
     }
 
     socket.on('newMessage', (payload) => {
-      dispatch(actions.addMessage(payload));
+      dispatch(messagesActions.addMessage(payload));
     });
 
     socket.on('newChannel', (payload) => {
-      dispatch(actions.addChannel(payload));
+      dispatch(channelsActions.addChannel(payload));
     });
 
     socket.on('renameChannel', (payload) => {
-      dispatch(actions.renameChannel(payload));
+      dispatch(channelsActions.renameChannel(payload));
     });
 
     socket.on('removeChannel', (payload) => {
       const { id } = payload;
 
-      dispatch(actions.removeChannel(id));
+      dispatch(channelsActions.removeChannel(id));
     });
 
     return () => {
@@ -140,7 +142,7 @@ const Root = () => {
 
   const changeChannel = (channelId) => (event) => {
     event.preventDefault();
-    dispatch(actions.setChannel(channelId));
+    dispatch(channelsActions.setChannel(channelId));
   };
 
   const [newMessage, setNewMessage] = useState('');
