@@ -22,7 +22,7 @@ const Channel = (props) => {
       active: isActive,
     },
   );
-  const linkClasses = cn({
+  const linkClasses = cn('channel-text', {
     'text-light': isActive,
   });
 
