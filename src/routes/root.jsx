@@ -66,8 +66,10 @@ const Root = () => {
     setModalShown(true);
   };
 
-  const addChannel = ({ name }) => {
-    socket.emit('newChannel', { name });
+  const addChannel = async ({ name }) => {
+    const data = await socket.emit('newChannel', { name });
+
+    dispatch(actions.setChannel(data.id));
     setModalShown(false);
     toast.notify(t('actions.channel.add'));
   };
@@ -119,7 +121,6 @@ const Root = () => {
 
     socket.on('newChannel', (payload) => {
       dispatch(actions.addChannel(payload));
-      dispatch(actions.setChannel(payload.id));
     });
 
     socket.on('renameChannel', (payload) => {
