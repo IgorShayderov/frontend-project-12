@@ -2,6 +2,8 @@
 
 html {
   height: 100%;
+
+  --header-height: 41px;
 }
 
 body {
@@ -25,6 +27,11 @@ code {
   height: 100%;
 }
 
+.header {
+  min-height: var(--header-height);
+  max-height: var(--header-height);
+}
+
 .add-btn {
   border: 0;
   font-size: 1.5rem;
@@ -41,4 +48,9 @@ code {
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
+}
+
+.channels-list {
+  max-height: calc(100vh - var(--header-height) - 36px - 8px - 12px);
+  overflow-y: auto;
 }

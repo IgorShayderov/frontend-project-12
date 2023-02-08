@@ -176,7 +176,7 @@ const Root = () => {
             </button>
           </p>
 
-          <ul className="list-group overflow-y-auto">
+          <ul className="list-group channels-list">
             {channels.map((channel) => (
               <Channel
                 key={channel.id}

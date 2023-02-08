@@ -17,7 +17,7 @@ const Header = () => {
   });
 
   return (
-    <Nav className="justify-content-between border-bottom">
+    <Nav className="justify-content-between border-bottom header">
       <Nav.Item>
         <Nav.Link href="/">
           Hexlet Chat
