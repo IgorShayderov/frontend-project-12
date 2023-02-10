@@ -9,6 +9,7 @@ import { useImmer } from 'use-immer';
 import { useTranslation } from 'react-i18next';
 
 import api from '../api';
+import routes from '../routes';
 
 const SignUpPage = () => {
   const { t } = useTranslation();
@@ -22,6 +23,7 @@ const SignUpPage = () => {
   const handleSubmit = async ({ login, password }) => {
     try {
       await api.signUp(login, password);
+      navigate(routes.rootPath());
     } catch ({ response }) {
       updateAuthError({
         hasError: true,
