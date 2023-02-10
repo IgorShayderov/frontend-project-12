@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
+import * as Yup from 'yup';
 
 import Root from './routes/root.jsx';
 import ErrorPage from './routes/error-page.jsx';
@@ -17,6 +18,7 @@ import initI18n from './i18n.js';
 import ToastProvider from './components/toast-provider.jsx';
 import RollbackProvider from './components/rollback-provider.jsx';
 import routes from './routes';
+import getYupLocale from './locales/getYupLocale.js';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +41,7 @@ const router = createBrowserRouter([
 const initApp = async () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
   const i18n = await initI18n();
+  Yup.setLocale(getYupLocale(i18n));
 
   root.render(
     <React.StrictMode>

@@ -9,7 +9,6 @@ import { useImmer } from 'use-immer';
 import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '../components/auth-provider.jsx';
-import getYupLocale from '../locales/getYupLocale.js';
 
 const SignUpPage = () => {
   const { t } = useTranslation();
@@ -37,9 +36,8 @@ const SignUpPage = () => {
   const loginInput = useRef(null);
 
   useEffect(() => {
-    Yup.setLocale(getYupLocale(t));
     loginInput.current.focus();
-  }, [location, t]);
+  }, [location]);
 
   return (
     <div className="d-flex justify-content-center align-items-center h-100">
