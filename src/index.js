@@ -30,7 +30,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: routes.loginPath(),
+    path: routes.signUpPath(),
     element: <SignUpPage />,
     errorElement: <ErrorPage />,
   },
