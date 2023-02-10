@@ -1,14 +1,10 @@
 /* eslint-disable no-param-reassign */
-import axios from 'axios';
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+import api from '../api';
+
 export const fetchChannels = createAsyncThunk('data', async (token) => {
-  const { data } = await axios.get('data', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const { data } = await api.getData(token);
 
   return data;
 });

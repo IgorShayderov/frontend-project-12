@@ -1,6 +1,6 @@
-/* eslint-disable no-shadow */
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+
+import api from '../api';
 
 const useProvideAuth = () => {
   const [currentUser, setUser] = useState(null);
@@ -16,27 +16,19 @@ const useProvideAuth = () => {
     }
   }, []);
 
-  const signIn = (username, password) => axios.post('login', {
-    username,
-    password,
-  }).then(({ data }) => {
-    const { token, username } = data;
+  const signIn = (login, password) => api.signIn({ login, password })
+    .then(({ token, username }) => {
+      localStorage.setItem('token', token);
+      localStorage.setItem('currentUser', username);
+      setUser(username);
+    });
 
-    localStorage.setItem('token', token);
-    localStorage.setItem('currentUser', username);
-    setUser(username);
-  });
-
-  const signUp = (username, password) => axios.post('signup', {
-    username,
-    password,
-  }).then(({ data }) => {
-    const { token, username } = data;
-
-    localStorage.setItem('token', token);
-    localStorage.setItem('currentUser', username);
-    setUser(username);
-  });
+  const signUp = (login, password) => api.signUp({ login, password })
+    .then(({ token, username }) => {
+      localStorage.setItem('token', token);
+      localStorage.setItem('currentUser', username);
+      setUser(username);
+    });
 
   const signOut = () => new Promise((resolve) => {
     localStorage.removeItem('token');

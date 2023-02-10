@@ -12,6 +12,7 @@ import { useImmer } from 'use-immer';
 import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '../components/auth-provider.jsx';
+import routes from '../routes';
 
 const LoginPage = () => {
   const { t } = useTranslation();
@@ -103,7 +104,7 @@ const LoginPage = () => {
 
               <div className="mb-2">
                 {t('login.signUpText')}
-                <Link to="/signup">
+                <Link to={routes.signUpPath()}>
                   {t('login.signUpLink')}
                 </Link>
               </div>

@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { useAuth } from './auth-provider.jsx';
+import routes from '../routes';
 
 const Header = () => {
   const { t } = useTranslation();
@@ -19,7 +20,7 @@ const Header = () => {
   return (
     <Nav className="justify-content-between border-bottom header">
       <Nav.Item>
-        <Nav.Link href="/">
+        <Nav.Link href={routes.rootPath()}>
           Hexlet Chat
         </Nav.Link>
       </Nav.Item>

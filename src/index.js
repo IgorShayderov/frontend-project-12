@@ -3,7 +3,6 @@ import './index.scss';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import axios from 'axios';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 
@@ -17,22 +16,21 @@ import Header from './components/header.jsx';
 import initI18n from './i18n.js';
 import ToastProvider from './components/toast-provider.jsx';
 import RollbackProvider from './components/rollback-provider.jsx';
-
-axios.defaults.baseURL = 'api/v1';
+import routes from './routes';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: routes.rootPath(),
     element: <Root />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/login',
+    path: routes.loginPath(),
     element: <LoginPage />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/signup',
+    path: routes.loginPath(),
     element: <SignUpPage />,
     errorElement: <ErrorPage />,
   },
