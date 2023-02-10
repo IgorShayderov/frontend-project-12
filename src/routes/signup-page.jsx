@@ -8,12 +8,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import { useTranslation } from 'react-i18next';
 
-import { useAuth } from '../components/auth-provider.jsx';
+import api from '../api';
 
 const SignUpPage = () => {
   const { t } = useTranslation();
 
-  const auth = useAuth();
   const navigate = useNavigate();
   const [authError, updateAuthError] = useImmer({
     hasError: false,
@@ -22,8 +21,7 @@ const SignUpPage = () => {
 
   const handleSubmit = async ({ login, password }) => {
     try {
-      await auth.signUp(login, password);
-      navigate('/');
+      await api.signUp(login, password);
     } catch ({ response }) {
       updateAuthError({
         hasError: true,
