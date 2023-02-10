@@ -6,6 +6,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import * as Yup from 'yup';
+import io from 'socket.io-client';
+import { actions as messagesActions } from './slices/messages-slice';
+import { actions as channelsActions } from './slices/channels-slice';
 
 import Root from './routes/root.jsx';
 import ErrorPage from './routes/error-page.jsx';
@@ -41,7 +44,27 @@ const router = createBrowserRouter([
 const initApp = async () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
   const i18n = await initI18n();
+  const socket = io();
+
   Yup.setLocale(getYupLocale(i18n.t));
+
+  socket.on('newMessage', (payload) => {
+    store.dispatch(messagesActions.addMessage(payload));
+  });
+
+  socket.on('newChannel', (payload) => {
+    store.dispatch(channelsActions.addChannel(payload));
+  });
+
+  socket.on('renameChannel', (payload) => {
+    store.dispatch(channelsActions.renameChannel(payload));
+  });
+
+  socket.on('removeChannel', (payload) => {
+    const { id } = payload;
+
+    store.dispatch(channelsActions.removeChannel(id));
+  });
 
   root.render(
     <React.StrictMode>

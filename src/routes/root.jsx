@@ -2,11 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import io from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
 
 import { fetchChannels, actions as channelsActions } from '../slices/channels-slice';
-import { actions as messagesActions } from '../slices/messages-slice';
 import { useAuth } from '../components/auth-provider.jsx';
 import { useToast } from '../components/toast-provider.jsx';
 import api from '../api';
@@ -47,8 +45,6 @@ const renderModal = ({
     />
   );
 };
-
-const socket = io();
 
 const Root = () => {
   const { t } = useTranslation();
@@ -117,28 +113,6 @@ const Root = () => {
         toast.warn(t('actions.errors.dataLoad'));
       }
     }
-
-    socket.on('newMessage', (payload) => {
-      dispatch(messagesActions.addMessage(payload));
-    });
-
-    socket.on('newChannel', (payload) => {
-      dispatch(channelsActions.addChannel(payload));
-    });
-
-    socket.on('renameChannel', (payload) => {
-      dispatch(channelsActions.renameChannel(payload));
-    });
-
-    socket.on('removeChannel', (payload) => {
-      const { id } = payload;
-
-      dispatch(channelsActions.removeChannel(id));
-    });
-
-    return () => {
-      socket.off();
-    };
   }, [dispatch, navigate, toast, token]);
 
   const changeChannel = (channelId) => (event) => {
