@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../api';
 
 export const fetchChannels = createAsyncThunk('data', async (token) => {
-  const { data } = await api.getData(token);
+  const { data } = await api.getData({ token });
 
   return data;
 });

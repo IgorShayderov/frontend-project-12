@@ -22,7 +22,7 @@ export default {
 
     return { token, username };
   }),
-  getData: (token) => axios.get('data', {
+  getData: ({ token }) => axios.get('data', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
