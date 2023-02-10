@@ -9,6 +9,7 @@ import { fetchChannels, actions as channelsActions } from '../slices/channels-sl
 import { actions as messagesActions } from '../slices/messages-slice';
 import { useAuth } from '../components/auth-provider.jsx';
 import { useToast } from '../components/toast-provider.jsx';
+import api from '../api';
 
 import Channel from '../components/channel.jsx';
 import Message from '../components/message.jsx';
@@ -69,7 +70,7 @@ const Root = () => {
   };
 
   const addChannel = async ({ name }) => {
-    const data = await socket.emit('newChannel', { name });
+    const data = await api.createChannel({ name });
 
     dispatch(channelsActions.setChannel(data.id));
     setModalShown(false);
@@ -77,13 +78,13 @@ const Root = () => {
   };
 
   const renameChannel = ({ text }) => {
-    socket.emit('renameChannel', { id: editingChannelId, name: text });
+    api.renameChannel({ id: editingChannelId, name: text });
     setModalShown(false);
     toast.notify(t('actions.channel.rename'));
   };
 
   const removeChannel = () => {
-    socket.emit('removeChannel', { id: editingChannelId });
+    api.removeChannel({ id: editingChannelId });
     setModalShown(false);
     toast.notify(t('actions.channel.remove'));
   };
@@ -150,7 +151,7 @@ const Root = () => {
     event.preventDefault();
 
     if (newMessage.length > 0) {
-      socket.emit('newMessage', {
+      api.addMessage({
         body: filter.clean(newMessage),
         channelId: currentChannelId,
         username: auth.currentUser,

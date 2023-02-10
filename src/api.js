@@ -1,6 +1,9 @@
 import axios from 'axios';
+import io from 'socket.io-client';
 
 axios.defaults.baseURL = 'api/v1';
+
+const socket = io();
 
 export default {
   signIn: ({ login, password }) => axios.post('login', {
@@ -24,4 +27,12 @@ export default {
       Authorization: `Bearer ${token}`,
     },
   }),
+  addMessage: ({ body, channelId, username }) => socket.emit('newMessage', {
+    body,
+    channelId,
+    username,
+  }),
+  createChannel: ({ name }) => socket.emit('newChannel', { name }),
+  renameChannel: ({ id, name }) => socket.emit('renameChannel', { id, name }),
+  removeChannel: ({ id }) => socket.emit('removeChannel', { id }),
 };
