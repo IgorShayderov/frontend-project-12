@@ -4,7 +4,7 @@ axios.defaults.baseURL = 'api/v1';
 
 export default {
   signIn: ({ login, password }) => axios.post('login', {
-    login,
+    username: login,
     password,
   }).then(({ data }) => {
     const { token, username } = data;
@@ -12,7 +12,7 @@ export default {
     return { token, username };
   }),
   signUp: ({ login, password }) => axios.post('signup', {
-    login,
+    username: login,
     password,
   }).then(({ data }) => {
     const { token, username } = data;
