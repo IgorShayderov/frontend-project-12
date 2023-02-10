@@ -75,7 +75,7 @@ const AddModal = (props) => {
               onChange={formik.handleChange}
               onInput={resetErrorsState}
               value={formik.values.text}
-              maxlength="30"
+              maxLength="30"
               className="mb-2"
               name="text"
               autoComplete="off"
