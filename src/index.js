@@ -41,7 +41,7 @@ const router = createBrowserRouter([
 const initApp = async () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
   const i18n = await initI18n();
-  Yup.setLocale(getYupLocale(i18n));
+  Yup.setLocale(getYupLocale(i18n.t));
 
   root.render(
     <React.StrictMode>
