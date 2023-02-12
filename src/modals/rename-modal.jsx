@@ -26,6 +26,7 @@ const AddModal = (props) => {
         resetForm();
       }
     },
+    enableReinitialize: true,
   });
 
   useEffect(() => {
