@@ -78,6 +78,7 @@ export default {
       },
       errors: {
         required: 'Обязательное поле',
+        unique: 'Значение должно быть уникальным',
       },
     },
     channel: {

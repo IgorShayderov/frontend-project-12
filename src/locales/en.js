@@ -55,9 +55,17 @@ export default {
       login: {
         placeholder: 'Login',
         placeholder2: 'Login',
+        errors: {
+          max: 'From {{ min }} to {{ max }} characters',
+          min: 'From {{ min }} to {{ max }} characters',
+        },
       },
       password: {
         placeholder: 'Password',
+        errors: {
+          max: 'Not more than {{ max }} characters',
+          min: 'Not lesser than {{ min }} characters',
+        },
       },
       passwordConfirmation: {
         placeholder: 'Password confirmation',
@@ -69,9 +77,8 @@ export default {
         placeholder: 'Type your message...',
       },
       errors: {
-        max: 'Must be {{ max }} characters or less',
-        min: 'Must be at least {{ min }} characters',
         required: 'Is required',
+        unique: 'Value should be unique',
       },
     },
     channel: {

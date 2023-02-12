@@ -1,12 +1,10 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-shadow */
 import React, { useEffect, useRef } from 'react';
 import {
   Modal, Form, FormGroup, FormControl,
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
-import { useImmer } from 'use-immer';
 import { useTranslation } from 'react-i18next';
+import * as Yup from 'yup';
 
 const AddModal = (props) => {
   const {
@@ -15,32 +13,17 @@ const AddModal = (props) => {
   const inputEl = useRef(null);
   const { t } = useTranslation();
 
-  const [errorsState, updateErrorState] = useImmer({
-    isShown: false,
-    message: '',
-  });
-  const errorEl = useRef(null);
-
-  const resetErrorsState = () => {
-    updateErrorState((errorsState) => {
-      errorsState.message = '';
-      errorsState.isShown = false;
-    });
-  };
-
   const formik = useFormik({
     initialValues: {
       text: channelName,
     },
+    validationSchema: Yup.object({
+      text: Yup.string().notOneOf(channels.map((channel) => channel.name)),
+    }),
     onSubmit: (values, { resetForm }) => {
-      if (!channels.some((channel) => channel.name === values.text)) {
+      if (formik.isValid) {
         renameChannel(values);
         resetForm();
-      } else {
-        updateErrorState((errorsState) => {
-          errorsState.message = t('modals.renameModal.errors.uniqueness');
-          errorsState.isShown = true;
-        });
       }
     },
   });
@@ -73,12 +56,12 @@ const AddModal = (props) => {
               type="text"
               ref={inputEl}
               onChange={formik.handleChange}
-              onInput={resetErrorsState}
               value={formik.values.text}
               maxLength="30"
               className="mb-2"
               name="text"
               autoComplete="off"
+              aria-describedby="renameChannelErrorMessage"
               required
             />
 
@@ -86,17 +69,17 @@ const AddModal = (props) => {
               {t('modals.addModal.label')}
             </Form.Label>
 
+            <Form.Text
+              id="renameChannelErrorMessage"
+              className="text-danger mb-2"
+            >
+              { formik.errors.text }
+            </Form.Text>
+
             <FormControl
               value={t('modals.renameModal.submit')}
               type="submit"
             />
-
-            <Form.Text
-              className="text-danger mb-2"
-              ref={errorEl}
-            >
-              {errorsState.message}
-            </Form.Text>
           </FormGroup>
         </Form>
       </Modal.Body>

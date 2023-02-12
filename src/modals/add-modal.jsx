@@ -1,10 +1,8 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-shadow */
 import React, { useEffect, useRef } from 'react';
 import { Modal, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
-import { useImmer } from 'use-immer';
 import { useTranslation } from 'react-i18next';
+import * as Yup from 'yup';
 
 const AddModal = (props) => {
   const {
@@ -13,43 +11,20 @@ const AddModal = (props) => {
   const inputEl = useRef(null);
   const { t } = useTranslation();
 
-  const [errorsState, updateErrorState] = useImmer({
-    isShown: false,
-    message: '',
-  });
-  const errorEl = useRef(null);
-
-  const resetErrorsState = () => {
-    updateErrorState((errorsState) => {
-      errorsState.message = '';
-      errorsState.isShown = false;
-    });
-  };
-
   const formik = useFormik({
     initialValues: {
       name: '',
     },
+    validationSchema: Yup.object({
+      name: Yup.string().notOneOf(channels.map((channel) => channel.name)),
+    }),
     onSubmit: (values, { resetForm }) => {
-      if (!channels.some((channel) => channel.name === values.name)) {
+      if (formik.isValid) {
         addChannel(values);
         resetForm();
-      } else {
-        updateErrorState((errorsState) => {
-          errorsState.message = t('modals.addModal.errors.uniqueness');
-          errorsState.isShown = true;
-        });
       }
     },
   });
-
-  useEffect(() => {
-    if (errorsState.isShown) {
-      errorEl.current.style.display = 'block';
-    } else {
-      errorEl.current.style.display = 'none';
-    }
-  }, [errorsState.isShown]);
 
   useEffect(() => {
     if (show) {
@@ -78,13 +53,13 @@ const AddModal = (props) => {
               type="text"
               ref={inputEl}
               onChange={formik.handleChange}
-              onInput={resetErrorsState}
               value={formik.values.name}
               maxLength="30"
               name="name"
               autoComplete="off"
               className="mb-2"
               placeholder="Name"
+              aria-describedby="newChannelErrorMessage"
               required
             />
 
@@ -93,10 +68,10 @@ const AddModal = (props) => {
             </Form.Label>
 
             <Form.Text
+              id="newChannelErrorMessage"
               className="text-danger mb-2"
-              ref={errorEl}
             >
-              {errorsState.message}
+              { formik.errors.name }
             </Form.Text>
 
             <Form.Control

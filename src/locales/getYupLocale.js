@@ -5,5 +5,6 @@ export default (t) => ({
   },
   mixed: {
     required: () => t('fields.errors.required'),
+    notOneOf: () => t('fields.errors.unique'),
   },
 });
