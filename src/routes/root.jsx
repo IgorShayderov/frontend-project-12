@@ -12,6 +12,7 @@ import api from '../api';
 import Channel from '../components/channel.jsx';
 import Message from '../components/message.jsx';
 import getModal from '../modals';
+import routes from '../routes';
 
 const filter = require('leo-profanity');
 
@@ -103,7 +104,7 @@ const Root = () => {
 
   useEffect(() => {
     if (token === null) {
-      navigate('/login');
+      navigate(routes.loginPath());
     } else {
       try {
         dispatch(fetchChannels(token));
