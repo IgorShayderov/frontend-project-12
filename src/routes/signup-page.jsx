@@ -22,7 +22,7 @@ const SignUpPage = () => {
 
   const handleSubmit = async ({ login, password }) => {
     try {
-      await api.signUp(login, password);
+      await api.signUp({ login, password });
       navigate(routes.rootPath());
     } catch ({ response }) {
       updateAuthError({
