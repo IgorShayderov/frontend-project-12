@@ -22,7 +22,11 @@ const SignUpPage = () => {
 
   const handleSubmit = async ({ login, password }) => {
     try {
-      await api.signUp({ login, password });
+      const { token, username } = await api.signUp({ login, password });
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('currentUser', username);
+
       navigate(routes.rootPath());
     } catch ({ response }) {
       updateAuthError({
