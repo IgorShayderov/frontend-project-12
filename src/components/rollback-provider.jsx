@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider, ErrorBoundary } from '@rollbar/react';
 
 const rollbarConfig = {
-  accessToken: '569ec94a508a4457bcb668c12991c048',
+  accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
   environment: 'testenv',
 };
 
