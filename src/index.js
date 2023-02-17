@@ -41,10 +41,14 @@ const router = createBrowserRouter([
   },
 ]);
 
+const filter = require('leo-profanity');
+
 const initApp = async () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
   const i18n = await initI18n();
   const socket = io();
+
+  filter.loadDictionary('ru');
 
   Yup.setLocale(getYupLocale(i18n.t));
 

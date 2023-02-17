@@ -15,8 +15,6 @@ import getModal from '../modals';
 
 const filter = require('leo-profanity');
 
-filter.loadDictionary('ru');
-
 const renderModal = ({
   isModalShown,
   modalType,
