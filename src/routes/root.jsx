@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,7 +9,7 @@ import { useToast } from '../components/toast-provider.jsx';
 import api from '../api';
 
 import Channel from '../components/channel.jsx';
-import Message from '../components/message.jsx';
+import MessagesList from '../components/messagesList.jsx';
 import getModal from '../modals';
 import routes from '../routes';
 
@@ -57,7 +56,6 @@ const Root = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { channels, currentChannelId } = useSelector((store) => store.channels);
-  const { messages } = useSelector((store) => store.messages);
 
   const handleAddChannel = () => {
     setModalType('adding');
@@ -167,20 +165,7 @@ const Root = () => {
         </div>
 
         <div className="col-10 bg-white d-flex flex-column ps-0">
-          <div className="flex-grow-1">
-            <ul className="list-group h-100 flex-column justify-content-end">
-              {messages
-                .filter(({ channelId }) => channelId === currentChannelId)
-                .map(({ id, body, username }) => (
-                  <Message
-                    key={id}
-                    text={body}
-                    isHighlighted={username === currentUser}
-                    username={username}
-                  />
-                ))}
-            </ul>
-          </div>
+          <MessagesList />
 
           <div className="pb-3">
             <form onSubmit={sendMessage}>
