@@ -5,8 +5,14 @@ import api from '../api';
 const useProvideAuth = () => {
   const [currentUser, setUser] = useState(null);
 
-  useEffect(() => {
+  const getToken = () => {
     const token = localStorage.getItem('token');
+
+    return token;
+  };
+
+  useEffect(() => {
+    const token = getToken();
 
     if (token) {
       const defaultUsername = 'unknown';
@@ -40,8 +46,9 @@ const useProvideAuth = () => {
   return {
     currentUser,
     signIn,
-    signUp
+    signUp,
     signOut,
+    getToken,
   };
 };
 

@@ -47,7 +47,7 @@ const renderModal = ({
 
 const Root = () => {
   const { t } = useTranslation();
-  const auth = useAuth();
+  const { currentUser, getToken } = useAuth();
   const toast = useToast();
 
   const [isModalShown, setModalShown] = useState(false);
@@ -100,7 +100,7 @@ const Root = () => {
     setModalShown(true);
   };
 
-  const token = localStorage.getItem('token');
+  const token = getToken();
 
   useEffect(() => {
     if (token === null) {
@@ -127,7 +127,7 @@ const Root = () => {
       api.addMessage({
         body: filter.clean(newMessage),
         channelId: currentChannelId,
-        username: auth.currentUser,
+        username: currentUser,
       });
       setNewMessage('');
     }
@@ -175,7 +175,7 @@ const Root = () => {
                   <Message
                     key={id}
                     text={body}
-                    isHighlighted={username === auth.currentUser}
+                    isHighlighted={username === currentUser}
                     username={username}
                   />
                 ))}
