@@ -26,7 +26,7 @@ const useProvideAuth = () => {
   const signOut = () => new Promise((resolve) => {
     localStorage.removeItem('token');
     localStorage.removeItem('currentUser');
-    window.location.reload();
+    setUser(null);
     resolve();
   });
 
