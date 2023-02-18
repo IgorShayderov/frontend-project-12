@@ -23,6 +23,13 @@ const useProvideAuth = () => {
       setUser(username);
     });
 
+  const signUp = (login, password) => api.signUp({ login, password })
+    .then(({ token, username }) => {
+      localStorage.setItem('token', token);
+      localStorage.setItem('currentUser', username);
+      setUser(username);
+    });
+
   const signOut = () => new Promise((resolve) => {
     localStorage.removeItem('token');
     localStorage.removeItem('currentUser');
@@ -33,6 +40,7 @@ const useProvideAuth = () => {
   return {
     currentUser,
     signIn,
+    signUp
     signOut,
   };
 };

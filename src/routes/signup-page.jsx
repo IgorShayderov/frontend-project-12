@@ -8,11 +8,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import { useTranslation } from 'react-i18next';
 
-import api from '../api';
 import routes from '../routes';
+import { useAuth } from '../components/auth-provider.jsx';
 
 const SignUpPage = () => {
   const { t } = useTranslation();
+  const { signUp } = useAuth();
 
   const navigate = useNavigate();
   const [authError, updateAuthError] = useImmer({
@@ -22,11 +23,7 @@ const SignUpPage = () => {
 
   const handleSubmit = async ({ login, password }) => {
     try {
-      const { token, username } = await api.signUp({ login, password });
-
-      localStorage.setItem('token', token);
-      localStorage.setItem('currentUser', username);
-
+      await signUp({ login, password });
       navigate(routes.rootPath());
     } catch ({ response }) {
       updateAuthError({
