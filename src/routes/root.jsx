@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import { actions as modalActions } from '../slices/modal-slice';
 import { fetchChannels, actions as channelsActions } from '../slices/channels-slice';
 import { useAuth } from '../components/auth-provider.jsx';
 import { useToast } from '../components/toast-provider.jsx';
@@ -23,7 +22,6 @@ const renderModal = ({
   addChannel,
   renameChannel,
   removeChannel,
-  close,
 }) => {
   if (modalType === null) {
     return null;
@@ -37,7 +35,6 @@ const renderModal = ({
       addChannel={addChannel}
       renameChannel={renameChannel}
       removeChannel={removeChannel}
-      close={close}
     />
   );
 };
@@ -56,27 +53,20 @@ const Root = () => {
     editingChannelId,
   } = useSelector((store) => store.modal);
 
-  const close = () => {
-    dispatch(modalActions.closeModal());
-  };
-
   const addChannel = async ({ name }) => {
     const data = await api.createChannel({ name });
 
     dispatch(channelsActions.setChannel(data.id));
-    close();
     toast.notify(t('actions.channel.add'));
   };
 
   const renameChannel = async ({ text }) => {
     await api.renameChannel({ id: editingChannelId, name: text });
-    close();
     toast.notify(t('actions.channel.rename'));
   };
 
   const removeChannel = async () => {
     await api.removeChannel({ id: editingChannelId });
-    close();
     toast.notify(t('actions.channel.remove'));
   };
 
@@ -147,7 +137,6 @@ const Root = () => {
         addChannel,
         renameChannel,
         removeChannel,
-        close,
       }) }
     </div>
   );

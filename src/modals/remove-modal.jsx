@@ -3,14 +3,25 @@ import {
   Modal, Form, FormGroup, Button,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+
+import useLoadingState from '../hooks/useLoadingState';
+import { actions } from '../slices/modal-slice';
 
 const AddModal = (props) => {
-  const { removeChannel, show, close } = props;
+  const { removeChannel, show } = props;
+  const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { isLoading, callWithLoading } = useLoadingState();
 
-  const onSubmit = (e) => {
+  const close = () => {
+    dispatch(actions.closeModal());
+  };
+
+  const onSubmit = async (e) => {
     e.preventDefault();
-    removeChannel();
+    await callWithLoading(removeChannel);
+    close();
   };
 
   return (
@@ -30,6 +41,7 @@ const AddModal = (props) => {
         <Form onSubmit={onSubmit}>
           <FormGroup>
             <Button
+              disabled={isLoading}
               className="button btn-danger w-100"
               type="submit"
             >

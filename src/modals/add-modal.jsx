@@ -3,13 +3,22 @@ import { Modal, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
+import useLoadingState from '../hooks/useLoadingState';
+import { actions } from '../slices/modal-slice';
 
 const AddModal = (props) => {
-  const { addChannel, show, close } = props;
+  const { addChannel, show } = props;
+  const dispatch = useDispatch();
   const inputEl = useRef(null);
   const { t } = useTranslation();
   const { channels } = useSelector((store) => store.channels);
+  const { isLoading, callWithLoading } = useLoadingState();
+
+  const close = () => {
+    dispatch(actions.closeModal());
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -18,9 +27,10 @@ const AddModal = (props) => {
     validationSchema: Yup.object({
       name: Yup.string().notOneOf(channels.map((channel) => channel.name)),
     }),
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: async (values, { resetForm }) => {
       if (formik.isValid) {
-        addChannel(values);
+        await callWithLoading(addChannel.bind(null, values));
+        close();
         resetForm();
       }
     },
@@ -75,6 +85,7 @@ const AddModal = (props) => {
             </Form.Text>
 
             <Form.Control
+              disabled={isLoading}
               value={t('modals.addModal.submit')}
               type="submit"
             />
