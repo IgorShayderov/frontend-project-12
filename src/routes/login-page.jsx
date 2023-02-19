@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '../components/auth-provider.jsx';
 import routes from '../routes';
+import useLoadingState from '../hooks/useLoadingState';
 
 const LoginPage = () => {
   const { t } = useTranslation();
@@ -26,6 +27,7 @@ const LoginPage = () => {
     hasError: false,
     errorMessage: '',
   });
+  const { isLoading, callWithLoading } = useLoadingState();
 
   useEffect(() => {
     loginInput.current.focus();
@@ -33,7 +35,7 @@ const LoginPage = () => {
 
   const handleSubmit = async ({ login, password }) => {
     try {
-      await auth.signIn(login, password);
+      await callWithLoading(auth.signIn.bind(null, login, password));
       navigate('/');
     } catch ({ response }) {
       updateAuthError({
@@ -110,7 +112,7 @@ const LoginPage = () => {
               </div>
 
               <FormGroup className="d-flex justify-content-center mb-2">
-                <Button type="submit">
+                <Button disabled={isLoading} type="submit">
                   {t('login.submit')}
                 </Button>
               </FormGroup>
