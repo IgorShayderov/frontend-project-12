@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 import routes from '../routes';
 import { useAuth } from '../components/auth-provider.jsx';
+import useLoadingState from '../hooks/useLoadingState';
 
 const SignUpPage = () => {
   const { t } = useTranslation();
@@ -20,10 +21,11 @@ const SignUpPage = () => {
     hasError: false,
     errorMessage: '',
   });
+  const { isLoading, callWithLoading } = useLoadingState();
 
   const handleSubmit = async ({ login, password }) => {
     try {
-      await signUp({ login, password });
+      await callWithLoading(signUp.bind(null, { login, password }));
       navigate(routes.rootPath());
     } catch ({ response }) {
       updateAuthError({
@@ -134,7 +136,7 @@ const SignUpPage = () => {
               </p>
 
               <FormGroup className="d-flex justify-content-center mb-2">
-                <Button type="submit">
+                <Button disabled={isLoading} type="submit">
                   { t('signUp.submit') }
                 </Button>
               </FormGroup>
