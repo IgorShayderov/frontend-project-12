@@ -6,7 +6,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import * as Yup from 'yup';
-import io from 'socket.io-client';
 import { actions as messagesActions } from './slices/messages-slice';
 import { actions as channelsActions } from './slices/channels-slice';
 
@@ -14,14 +13,16 @@ import Root from './routes/root.jsx';
 import ErrorPage from './routes/error-page.jsx';
 import LoginPage from './routes/login-page.jsx';
 import SignUpPage from './routes/signup-page.jsx';
-import store from './slices/index.js';
 import AuthProvider from './components/auth-provider.jsx';
-import Header from './components/header.jsx';
-import initI18n from './i18n.js';
 import ToastProvider from './components/toast-provider.jsx';
 import RollbackProvider from './components/rollback-provider.jsx';
+import Header from './components/header.jsx';
+
+import store from './slices/index.js';
+import initI18n from './i18n.js';
 import routes from './routes';
 import getYupLocale from './locales/getYupLocale.js';
+import api from './api';
 
 const router = createBrowserRouter([
   {
@@ -46,25 +47,24 @@ const filter = require('leo-profanity');
 const initApp = async () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
   const i18n = await initI18n();
-  const socket = io();
 
   filter.loadDictionary('ru');
 
   Yup.setLocale(getYupLocale(i18n.t));
 
-  socket.on('newMessage', (payload) => {
+  api.listenSocketEvent('newMessage', (payload) => {
     store.dispatch(messagesActions.addMessage(payload));
   });
 
-  socket.on('newChannel', (payload) => {
+  api.listenSocketEvent('newChannel', (payload) => {
     store.dispatch(channelsActions.addChannel(payload));
   });
 
-  socket.on('renameChannel', (payload) => {
+  api.listenSocketEvent('renameChannel', (payload) => {
     store.dispatch(channelsActions.renameChannel(payload));
   });
 
-  socket.on('removeChannel', (payload) => {
+  api.listenSocketEvent('removeChannel', (payload) => {
     const { id } = payload;
 
     store.dispatch(channelsActions.removeChannel(id));

@@ -35,4 +35,7 @@ export default {
   createChannel: ({ name }) => socket.emit('newChannel', { name }),
   renameChannel: ({ id, name }) => socket.emit('renameChannel', { id, name }),
   removeChannel: ({ id }) => socket.emit('removeChannel', { id }),
+  listenSocketEvent: (event, callback) => {
+    socket.on(event, callback);
+  },
 };
