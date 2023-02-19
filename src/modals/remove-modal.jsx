@@ -5,7 +5,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 const AddModal = (props) => {
-  const { handleClose, removeChannel, show } = props;
+  const { removeChannel, show, close } = props;
   const { t } = useTranslation();
 
   const onSubmit = (e) => {
@@ -14,7 +14,7 @@ const AddModal = (props) => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose} centered>
+    <Modal show={show} onHide={close} centered>
       <Modal.Header>
         <Modal.Title>{ t('modals.removeModal.title') }</Modal.Title>
 
@@ -22,7 +22,7 @@ const AddModal = (props) => {
           type="button"
           className="btn-close"
           aria-label="Close"
-          onClick={handleClose}
+          onClick={close}
         />
       </Modal.Header>
 

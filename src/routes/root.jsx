@@ -1,14 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
+import { actions as modalActions } from '../slices/modal-slice';
 import { fetchChannels, actions as channelsActions } from '../slices/channels-slice';
 import { useAuth } from '../components/auth-provider.jsx';
 import { useToast } from '../components/toast-provider.jsx';
 import api from '../api';
 
-import Channel from '../components/channel.jsx';
+import ChannelsList from '../components/channelsList.jsx';
 import MessagesList from '../components/messagesList.jsx';
 import getModal from '../modals';
 import routes from '../routes';
@@ -18,12 +20,10 @@ const filter = require('leo-profanity');
 const renderModal = ({
   isModalShown,
   modalType,
-  handleClose,
   addChannel,
   renameChannel,
   removeChannel,
-  channels,
-  channelName,
+  close,
 }) => {
   if (modalType === null) {
     return null;
@@ -34,12 +34,10 @@ const renderModal = ({
   return (
     <Modal
       show={isModalShown}
-      handleClose={handleClose}
-      channels={channels}
       addChannel={addChannel}
       renameChannel={renameChannel}
       removeChannel={removeChannel}
-      channelName={channelName}
+      close={close}
     />
   );
 };
@@ -49,53 +47,37 @@ const Root = () => {
   const { currentUser, getToken } = useAuth();
   const toast = useToast();
 
-  const [isModalShown, setModalShown] = useState(false);
-  const [modalType, setModalType] = useState(null);
-  const [editingChannelId, setEditingChannelId] = useState(0);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { channels, currentChannelId } = useSelector((store) => store.channels);
+  const { currentChannelId } = useSelector((store) => store.channels);
+  const {
+    type: modalType,
+    isShown: isModalShown,
+    editingChannelId,
+  } = useSelector((store) => store.modal);
 
-  const handleAddChannel = () => {
-    setModalType('adding');
-    setModalShown(true);
+  const close = () => {
+    dispatch(modalActions.closeModal());
   };
 
   const addChannel = async ({ name }) => {
     const data = await api.createChannel({ name });
 
     dispatch(channelsActions.setChannel(data.id));
-    setModalShown(false);
+    close();
     toast.notify(t('actions.channel.add'));
   };
 
-  const renameChannel = ({ text }) => {
-    api.renameChannel({ id: editingChannelId, name: text });
-    setModalShown(false);
+  const renameChannel = async ({ text }) => {
+    await api.renameChannel({ id: editingChannelId, name: text });
+    close();
     toast.notify(t('actions.channel.rename'));
   };
 
-  const removeChannel = () => {
-    api.removeChannel({ id: editingChannelId });
-    setModalShown(false);
+  const removeChannel = async () => {
+    await api.removeChannel({ id: editingChannelId });
+    close();
     toast.notify(t('actions.channel.remove'));
-  };
-
-  const handleClose = () => {
-    setModalType(null);
-    setModalShown(false);
-  };
-
-  const openRenameModal = (channelId) => () => {
-    setEditingChannelId(channelId);
-    setModalType('renaming');
-    setModalShown(true);
-  };
-  const openRemoveModal = (channelId) => () => {
-    setEditingChannelId(channelId);
-    setModalType('removing');
-    setModalShown(true);
   };
 
   const token = getToken();
@@ -111,11 +93,6 @@ const Root = () => {
       }
     }
   }, [dispatch, navigate, toast, token]);
-
-  const changeChannel = (channelId) => (event) => {
-    event.preventDefault();
-    dispatch(channelsActions.setChannel(channelId));
-  };
 
   const [newMessage, setNewMessage] = useState('');
   const sendMessage = (event) => {
@@ -137,32 +114,7 @@ const Root = () => {
   return (
     <div className="flex-grow-1 h-100 d-flex flex-column">
       <div className="row flex-grow-1">
-        <div className="col-2 bg-light">
-          <p className="d-flex align-items-center justify-content-between px-1 mb-2">
-            { t('channels') }
-            <button
-              className="bg-light add-btn"
-              aria-label="Add channel"
-              type="button"
-              onClick={handleAddChannel}
-            >
-              +
-            </button>
-          </p>
-
-          <ul className="list-group channels-list">
-            {channels.map((channel) => (
-              <Channel
-                key={channel.id}
-                channel={channel}
-                activeChannelId={currentChannelId}
-                changeChannel={changeChannel}
-                handleRename={openRenameModal}
-                handleRemove={openRemoveModal}
-              />
-            ))}
-          </ul>
-        </div>
+        <ChannelsList />
 
         <div className="col-10 bg-white d-flex flex-column ps-0">
           <MessagesList />
@@ -192,12 +144,10 @@ const Root = () => {
       { renderModal({
         isModalShown,
         modalType,
-        handleClose,
         addChannel,
         renameChannel,
         removeChannel,
-        channels,
-        channelName: channels.find((channel) => channel.id === editingChannelId)?.name ?? '',
+        close,
       }) }
     </div>
   );

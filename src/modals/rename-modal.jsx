@@ -5,17 +5,20 @@ import {
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+import { useSelector } from 'react-redux';
 
 const AddModal = (props) => {
-  const {
-    handleClose, renameChannel, show, channelName, channels,
-  } = props;
+  const { renameChannel, show, close } = props;
   const inputEl = useRef(null);
   const { t } = useTranslation();
+  const { channels } = useSelector((store) => store.channels);
+  const { editingChannelId } = useSelector((store) => store.modal);
+
+  const getChannelName = () => channels.find((channel) => channel.id === editingChannelId)?.name ?? '';
 
   const formik = useFormik({
     initialValues: {
-      text: channelName,
+      text: getChannelName(),
     },
     validationSchema: Yup.object({
       text: Yup.string().notOneOf(channels.map((channel) => channel.name)),
@@ -37,7 +40,7 @@ const AddModal = (props) => {
   }, [show]);
 
   return (
-    <Modal show={show} onHide={handleClose} centered>
+    <Modal show={show} onHide={close} centered>
       <Modal.Header>
         <Modal.Title>{ t('modals.renameModal.title') }</Modal.Title>
 
@@ -45,7 +48,7 @@ const AddModal = (props) => {
           type="button"
           className="btn-close"
           aria-label="Close"
-          onClick={handleClose}
+          onClick={close}
         />
       </Modal.Header>
 

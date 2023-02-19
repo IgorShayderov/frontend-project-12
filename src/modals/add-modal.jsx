@@ -3,13 +3,13 @@ import { Modal, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+import { useSelector } from 'react-redux';
 
 const AddModal = (props) => {
-  const {
-    handleClose, addChannel, show, channels,
-  } = props;
+  const { addChannel, show, close } = props;
   const inputEl = useRef(null);
   const { t } = useTranslation();
+  const { channels } = useSelector((store) => store.channels);
 
   const formik = useFormik({
     initialValues: {
@@ -33,7 +33,7 @@ const AddModal = (props) => {
   }, [show]);
 
   return (
-    <Modal show={show} onHide={handleClose} centered>
+    <Modal show={show} onHide={close} centered>
       <Modal.Header>
         <Modal.Title>{ t('modals.addModal.title') }</Modal.Title>
 
@@ -41,7 +41,7 @@ const AddModal = (props) => {
           type="button"
           className="btn-close"
           aria-label="Close"
-          onClick={handleClose}
+          onClick={close}
         />
       </Modal.Header>
 
