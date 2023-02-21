@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import leoProfanity from 'leo-profanity';
 
 import { fetchChannels, actions as channelsActions } from '../slices/channels-slice';
 import { useAuth } from '../components/auth-provider.jsx';
@@ -13,8 +14,6 @@ import ChannelsList from '../components/channelsList.jsx';
 import MessagesList from '../components/messagesList.jsx';
 import getModal from '../modals';
 import routes from '../routes';
-
-const filter = require('leo-profanity');
 
 const renderModal = ({
   isModalShown,
@@ -90,7 +89,7 @@ const Root = () => {
 
     if (newMessage.length > 0) {
       api.addMessage({
-        body: filter.clean(newMessage),
+        body: leoProfanity.clean(newMessage),
         channelId: currentChannelId,
         username: currentUser,
       });

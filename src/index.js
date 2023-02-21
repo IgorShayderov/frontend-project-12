@@ -6,8 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import * as Yup from 'yup';
-import { actions as messagesActions } from './slices/messages-slice';
-import { actions as channelsActions } from './slices/channels-slice';
+import leoProfanity from 'leo-profanity';
 
 import Root from './routes/root.jsx';
 import ErrorPage from './routes/error-page.jsx';
@@ -23,6 +22,8 @@ import initI18n from './i18n.js';
 import routes from './routes';
 import getYupLocale from './locales/getYupLocale.js';
 import api from './api';
+import { actions as messagesActions } from './slices/messages-slice';
+import { actions as channelsActions } from './slices/channels-slice';
 
 const router = createBrowserRouter([
   {
@@ -42,13 +43,11 @@ const router = createBrowserRouter([
   },
 ]);
 
-const filter = require('leo-profanity');
-
 const initApp = async () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
   const i18n = await initI18n();
 
-  filter.loadDictionary('ru');
+  leoProfanity.loadDictionary('ru');
 
   Yup.setLocale(getYupLocale(i18n.t));
 
