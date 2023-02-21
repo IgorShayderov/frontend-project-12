@@ -82,7 +82,7 @@ const Root = () => {
         toast.warn(t('actions.errors.dataLoad'));
       }
     }
-  }, [dispatch, navigate, toast, token]);
+  }, []);
 
   const [newMessage, setNewMessage] = useState('');
   const sendMessage = (event) => {
