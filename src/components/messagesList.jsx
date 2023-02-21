@@ -11,7 +11,7 @@ const MessagesList = () => {
 
   return (
     <div className="flex-grow-1">
-      <ul className="list-group h-100 flex-column justify-content-end">
+      <ul className="messages-list list-group h-100">
         {messages
           .filter(({ channelId }) => channelId === currentChannelId)
           .map(({ id, body, username }) => (

@@ -101,11 +101,11 @@ const Root = () => {
   };
 
   return (
-    <div className="flex-grow-1 h-100 d-flex flex-column">
-      <div className="row flex-grow-1">
+    <div className="h-100 d-flex flex-column">
+      <div className="row m-0">
         <ChannelsList />
 
-        <div className="col-10 bg-white d-flex flex-column ps-0">
+        <div className="col-10 bg-white d-flex flex-column p-0">
           <MessagesList />
 
           <div className="pb-3">

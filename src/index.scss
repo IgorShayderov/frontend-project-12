@@ -54,3 +54,9 @@ code {
   max-height: calc(100vh - var(--header-height) - 36px - 8px - 12px);
   overflow-y: auto;
 }
+
+.messages-list {
+  max-height: calc(100vh - var(--header-height) - 30px - 30px - 16px);
+  min-height: calc(100vh - var(--header-height) - 30px - 30px - 16px);
+  overflow-y: scroll;
+}

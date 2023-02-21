@@ -29,7 +29,7 @@ const ChannelsList = () => {
   };
 
   return (
-    <div className="col-2 bg-light">
+    <div className="col-2 bg-light p-0 border-end">
       <p className="d-flex align-items-center justify-content-between px-1 mb-2">
         { t('channels') }
         <button
