@@ -123,7 +123,7 @@ const Root = () => {
                 disabled={newMessage.length === 0}
                 className="w-100"
                 type="submit"
-                value="Send"
+                value={t('actions.message.submit')}
               />
             </form>
           </div>

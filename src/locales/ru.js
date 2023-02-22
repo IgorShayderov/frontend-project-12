@@ -7,6 +7,9 @@ export default {
         rename: 'Канал переименован',
         remove: 'Канал удалён',
       },
+      message: {
+        submit: 'Отправить',
+      },
     },
     header: {
       signOut: 'Выход',

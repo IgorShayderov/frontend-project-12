@@ -7,6 +7,9 @@ export default {
         rename: 'Channel has been successfully renamed',
         remove: 'Channel has been successfully removed',
       },
+      message: {
+        submit: 'Submit',
+      },
     },
     header: {
       signOut: 'Sign out',
