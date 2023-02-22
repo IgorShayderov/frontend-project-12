@@ -22,10 +22,7 @@ const channelsSlice = createSlice({
       state.currentChannelId = payload;
     },
     addChannel: (state, { payload }) => {
-      const { id } = payload;
-
       state.channels.push(payload);
-      state.currentChannelId = id;
     },
     renameChannel: (state, { payload }) => {
       const { id } = payload;

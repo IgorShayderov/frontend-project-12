@@ -54,7 +54,6 @@ const Root = () => {
 
   const addChannel = async ({ name }) => {
     const data = await api.createChannel({ name });
-
     dispatch(channelsActions.setChannel(data.id));
     toast.notify(t('actions.channel.add'));
   };

@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import { useEffect, useRef } from 'react';
 
 import { useAuth } from './auth-provider.jsx';
 
@@ -9,9 +10,15 @@ const MessagesList = () => {
   const { messages } = useSelector((store) => store.messages);
   const { currentUser } = useAuth();
 
+  const messagesList = useRef(null);
+
+  useEffect(() => {
+    messagesList.current.scroll(0, messagesList.current.scrollHeight);
+  }, [messagesList, messages.length]);
+
   return (
     <div className="flex-grow-1">
-      <ul className="messages-list list-group h-100">
+      <ul className="messages-list list-group h-100" ref={messagesList}>
         {messages
           .filter(({ channelId }) => channelId === currentChannelId)
           .map(({ id, body, username }) => (
