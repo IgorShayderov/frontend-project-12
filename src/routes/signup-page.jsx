@@ -25,7 +25,7 @@ const SignUpPage = () => {
 
   const handleSubmit = async ({ login, password }) => {
     try {
-      await callWithLoading(signUp.bind(null, { login, password }));
+      await callWithLoading(signUp.bind(null, login, password));
       navigate(routes.rootPath());
     } catch ({ response }) {
       updateAuthError({
