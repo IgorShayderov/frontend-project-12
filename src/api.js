@@ -5,6 +5,16 @@ axios.defaults.baseURL = 'api/v1';
 
 const socket = io();
 
+const asyncronizeSocket = (fn) => (...args) => new Promise((resolve, reject) => {
+  setTimeout(() => {
+    reject();
+  }, 3000);
+
+  fn(...args, (response) => {
+    resolve(response.data);
+  });
+});
+
 export default {
   signIn: ({ login, password }) => axios.post('login', {
     username: login,
@@ -32,9 +42,9 @@ export default {
     channelId,
     username,
   }),
-  createChannel: ({ name }) => socket.emit('newChannel', { name }),
-  renameChannel: ({ id, name }) => socket.emit('renameChannel', { id, name }),
-  removeChannel: ({ id }) => socket.emit('removeChannel', { id }),
+  createChannel: asyncronizeSocket((...args) => socket.volatile.emit('newChannel', ...args)),
+  renameChannel: asyncronizeSocket((...args) => socket.volatile.emit('renameChannel', ...args)),
+  removeChannel: asyncronizeSocket((...args) => socket.volatile.emit('removeChannel', ...args)),
   listenSocketEvent: (event, callback) => {
     socket.on(event, callback);
   },
