@@ -81,7 +81,7 @@ const Root = () => {
         toast.warn(t('actions.errors.dataLoad'));
       }
     }
-  }, []);
+  }, [token]);
 
   const [newMessage, setNewMessage] = useState('');
   const sendMessage = (event) => {
