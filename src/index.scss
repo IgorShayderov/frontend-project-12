@@ -59,4 +59,8 @@ code {
   max-height: calc(100vh - var(--header-height) - 30px - 30px - 16px);
   min-height: calc(100vh - var(--header-height) - 30px - 30px - 16px);
   overflow-y: scroll;
+
+  :first-child {
+    margin-top: auto;
+  }
 }
