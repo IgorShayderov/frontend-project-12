@@ -2,13 +2,6 @@ import axios from 'axios';
 import io from 'socket.io-client';
 
 axios.defaults.baseURL = 'api/v1';
-const unauthorizedStatus = 401;
-
-axios.interceptors.response.use((response) => response, (error) => {
-  if (error.response.status === unauthorizedStatus) {
-    localStorage.removeItem('token');
-  }
-});
 
 const socket = io();
 
