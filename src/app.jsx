@@ -11,9 +11,9 @@ import ErrorPage from './routes/error-page.jsx';
 import LoginPage from './routes/login-page.jsx';
 import SignUpPage from './routes/signup-page.jsx';
 import Header from './components/header.jsx';
+import AuthProvider, { useAuth } from './components/auth-provider.jsx';
 
 import routes from './routes';
-import { useAuth } from './components/auth-provider.jsx';
 
 const PrivateOutlet = () => {
   const auth = useAuth();
@@ -22,18 +22,20 @@ const PrivateOutlet = () => {
 };
 
 const App = () => (
-  <Router>
-    <Header />
+  <AuthProvider>
+    <Router>
+      <Header />
 
-    <Routes>
-      <Route path={routes.loginPath()} element={<LoginPage />} />
-      <Route path={routes.signUpPath()} element={<SignUpPage />} />
-      <Route path={routes.rootPath()} element={<PrivateOutlet />}>
-        <Route path="" element={<Root />} />
-      </Route>
-      <Route path="*" element={<ErrorPage />} />
-    </Routes>
-  </Router>
+      <Routes>
+        <Route path={routes.loginPath()} element={<LoginPage />} />
+        <Route path={routes.signUpPath()} element={<SignUpPage />} />
+        <Route path={routes.rootPath()} element={<PrivateOutlet />}>
+          <Route path="" element={<Root />} />
+        </Route>
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+    </Router>
+  </AuthProvider>
 );
 
 export default App;

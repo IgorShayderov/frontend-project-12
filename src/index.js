@@ -8,7 +8,6 @@ import { I18nextProvider } from 'react-i18next';
 import * as Yup from 'yup';
 import leoProfanity from 'leo-profanity';
 
-import AuthProvider from './components/auth-provider.jsx';
 import ToastProvider from './components/toast-provider.jsx';
 import RollbackProvider from './components/rollback-provider.jsx';
 import App from './app.jsx';
@@ -51,11 +50,9 @@ const initApp = async () => {
       <RollbackProvider>
         <Provider store={store}>
           <I18nextProvider i18n={i18n}>
-            <AuthProvider>
-              <ToastProvider>
-                <App />
-              </ToastProvider>
-            </AuthProvider>
+            <ToastProvider>
+              <App />
+            </ToastProvider>
           </I18nextProvider>
         </Provider>
 

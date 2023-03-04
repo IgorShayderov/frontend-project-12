@@ -1,26 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import api from '../api';
 
 const useProvideAuth = () => {
-  const [currentUser, setUser] = useState(null);
+  const savedUsername = localStorage.getItem('currentUser');
+  const [currentUser, setUser] = useState(savedUsername);
 
   const getToken = () => {
     const token = localStorage.getItem('token');
 
     return token;
   };
-
-  useEffect(() => {
-    const token = getToken();
-
-    if (token) {
-      const defaultUsername = 'unknown';
-      const user = localStorage.getItem('currentUser') ?? defaultUsername;
-
-      setUser(user);
-    }
-  }, []);
 
   const signIn = (login, password) => api.signIn({ login, password })
     .then(({ token, username }) => {
@@ -49,6 +39,7 @@ const useProvideAuth = () => {
     signUp,
     signOut,
     getToken,
+    setUser,
   };
 };
 
