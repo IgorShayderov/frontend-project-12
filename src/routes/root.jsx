@@ -40,7 +40,7 @@ const renderModal = ({
 
 const Root = () => {
   const { t } = useTranslation();
-  const { currentUser, getToken } = useAuth();
+  const { currentUser, getToken, setUser } = useAuth();
   const toast = useToast();
 
   const navigate = useNavigate();
@@ -74,11 +74,17 @@ const Root = () => {
     if (token === null) {
       navigate(routes.loginPath());
     } else {
-      try {
-        dispatch(fetchChannels(token));
-      } catch {
-        toast.warn(t('actions.errors.dataLoad'));
-      }
+      dispatch(fetchChannels(token))
+        .then(({ error }) => {
+          const unathErrorMessage = 'Request failed with status code 401';
+
+          if (error && error.message === unathErrorMessage) {
+            setUser(null);
+          }
+        })
+        .catch(() => {
+          toast.warn(t('actions.errors.dataLoad'));
+        });
     }
   }, [token]);
 
