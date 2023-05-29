@@ -36,7 +36,7 @@ const LoginPage = () => {
   const handleSubmit = async ({ login, password }) => {
     try {
       await callWithLoading(auth.signIn.bind(null, login, password));
-      navigate('/');
+      navigate(routes.rootPath());
     } catch ({ response }) {
       updateAuthError({
         hasError: true,
