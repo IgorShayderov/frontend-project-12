@@ -23,7 +23,11 @@ const initApp = async () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
   const i18n = await initI18n();
 
-  leoProfanity.loadDictionary('ru');
+  const ruDictionary = leoProfanity.loadDictionary('ru');
+  const enDictionary = leoProfanity.loadDictionary('en');
+
+  leoProfanity.add(ruDictionary);
+  leoProfanity.add(enDictionary);
 
   Yup.setLocale(getYupLocale(i18n.t));
 
