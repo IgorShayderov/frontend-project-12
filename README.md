@@ -5,9 +5,11 @@
 Chat is an application for communication with other people.
 
 ### System requirements
+
 - Node.js 18.12 >=
 
 ### Installation
+
 - clone repository
 - run 'make install' in terminal
 - run 'npm run build' && 'npm run start' for production build
