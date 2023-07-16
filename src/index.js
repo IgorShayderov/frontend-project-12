@@ -6,7 +6,6 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import * as Yup from 'yup';
-import leoProfanity from 'leo-profanity';
 
 import ToastProvider from './components/toast-provider.jsx';
 import RollbackProvider from './components/rollback-provider.jsx';
@@ -22,12 +21,6 @@ import { actions as channelsActions } from './slices/channels-slice';
 const initApp = async () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
   const i18n = await initI18n();
-
-  const ruDictionary = leoProfanity.loadDictionary('ru');
-  const enDictionary = leoProfanity.loadDictionary('en');
-
-  leoProfanity.add(ruDictionary);
-  leoProfanity.add(enDictionary);
 
   Yup.setLocale(getYupLocale(i18n.t));
 
